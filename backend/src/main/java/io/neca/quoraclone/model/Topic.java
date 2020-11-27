@@ -19,6 +19,4 @@ public class Topic {
     private int id;
     private String name;
     private String description;
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Question> questions;
 }

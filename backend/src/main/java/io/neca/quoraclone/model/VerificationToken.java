@@ -6,21 +6,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.Instant;
 
 @Data
 @Entity
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Answer {
+public class VerificationToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String body;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "questionId", referencedColumnName = "id")
-    private Question question;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId", referencedColumnName = "id")
+    private String token;
+    @OneToOne(fetch = FetchType.LAZY)
     private User user;
+    private Instant expiration;
 }
