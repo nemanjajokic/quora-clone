@@ -46,7 +46,8 @@ public class AuthService {
     }
 
     public void verifyAccount(String token) {
-        verificationTokenRepository.findByToken(token);
+        VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
+        verifyUser(verificationToken);
     }
 
     private String generateVerificationToken(User user) {

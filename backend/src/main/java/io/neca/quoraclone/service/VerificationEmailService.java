@@ -13,17 +13,7 @@ import org.thymeleaf.context.Context;
 public class VerificationEmailService {
 
     @Autowired
-    private TemplateEngine templateEngine;
-    @Autowired
     private JavaMailSender sender;
-
-    // remove this method and thymeleaf template
-    public String createEmail(String message) {
-        Context context = new Context();
-        context.setVariable("message", message);
-
-        return templateEngine.process("verification-email", context);
-    }
 
     public void sendMail(VerificationEmail email) {
         SimpleMailMessage message = new SimpleMailMessage();
