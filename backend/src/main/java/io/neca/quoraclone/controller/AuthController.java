@@ -1,7 +1,7 @@
 package io.neca.quoraclone.controller;
 
+import io.neca.quoraclone.dto.LoginRequest;
 import io.neca.quoraclone.dto.RegistrationRequest;
-import io.neca.quoraclone.model.User;
 import io.neca.quoraclone.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +14,13 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+        authService.login(loginRequest);
+
+        return new ResponseEntity<>("You are logged in", HttpStatus.OK);
+    }
 
     @PostMapping("/signup")
     public ResponseEntity<String> signUp(@RequestBody RegistrationRequest registrationRequest) {

@@ -1,13 +1,15 @@
 package io.neca.quoraclone.service;
 
 import io.neca.quoraclone.dao.VerificationTokenRepository;
+import io.neca.quoraclone.dto.LoginRequest;
 import io.neca.quoraclone.dto.RegistrationRequest;
 import io.neca.quoraclone.model.User;
 import io.neca.quoraclone.dao.UserRepository;
 import io.neca.quoraclone.model.VerificationEmail;
 import io.neca.quoraclone.model.VerificationToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,15 @@ public class AuthService {
     VerificationTokenRepository verificationTokenRepository;
     @Autowired
     private VerificationEmailService emailService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    public void login(LoginRequest loginRequest) {
+//        User user = userRepository.findByUsername(loginRequest.getUsername());
+//        if(user.isVerified())
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+    }
 
     @Transactional
     public void signUp(RegistrationRequest registrationRequest) {
@@ -44,6 +55,8 @@ public class AuthService {
                 "please click on the link below to activate your account: " +
                 "http://localhost:8080/auth/accountVerification/" + token));
     }
+
+    // Email Verification
 
     public void verifyAccount(String token) {
         VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
