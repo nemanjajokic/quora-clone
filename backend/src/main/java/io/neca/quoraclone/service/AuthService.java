@@ -8,6 +8,7 @@ import io.neca.quoraclone.dao.UserRepository;
 import io.neca.quoraclone.model.VerificationEmail;
 import io.neca.quoraclone.model.VerificationToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,6 +32,9 @@ public class AuthService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Value("${verification.link.prefix}")
+    private String verificationLinkPrefix;
+
     public void login(LoginRequest loginRequest) {
 //        User user = userRepository.findByUsername(loginRequest.getUsername());
 //        if(user.isVerified())
@@ -53,7 +57,7 @@ public class AuthService {
                 "Activate your account here",
                 user.getEmail(),
                 "please click on the link below to activate your account: " +
-                "http://localhost:8080/auth/accountVerification/" + token));
+                verificationLinkPrefix + token));
     }
 
     // Email Verification
