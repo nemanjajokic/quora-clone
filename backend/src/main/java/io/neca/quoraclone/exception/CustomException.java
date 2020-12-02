@@ -1,4 +1,4 @@
-package io.neca.quoraclone;
+package io.neca.quoraclone.exception;
 
 public class CustomException extends RuntimeException {
 

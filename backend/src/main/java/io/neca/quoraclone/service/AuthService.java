@@ -1,16 +1,20 @@
 package io.neca.quoraclone.service;
 
 import io.neca.quoraclone.dao.VerificationTokenRepository;
+import io.neca.quoraclone.dto.AuthenticationResponse;
 import io.neca.quoraclone.dto.LoginRequest;
 import io.neca.quoraclone.dto.RegistrationRequest;
 import io.neca.quoraclone.model.User;
 import io.neca.quoraclone.dao.UserRepository;
 import io.neca.quoraclone.model.VerificationEmail;
 import io.neca.quoraclone.model.VerificationToken;
+import io.neca.quoraclone.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,15 +35,23 @@ public class AuthService {
     private VerificationEmailService emailService;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    JwtUtil jwtUtil;
 
     @Value("${verification.link.prefix}")
     private String verificationLinkPrefix;
 
-    public void login(LoginRequest loginRequest) {
+    public AuthenticationResponse login(LoginRequest loginRequest) {
 //        User user = userRepository.findByUsername(loginRequest.getUsername());
 //        if(user.isVerified())
-        authenticationManager.authenticate(
+        Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+
+        // Authorization
+        SecurityContextHolder.getContext().setAuthentication(authenticate);
+        String token = jwtUtil.GenerateTokenWithUsername(loginRequest.getUsername());
+
+        return new AuthenticationResponse(token, loginRequest.getUsername());
     }
 
     @Transactional
