@@ -1,7 +1,6 @@
 package io.neca.quoraclone.controller;
 
 import io.neca.quoraclone.dto.TopicDto;
-import io.neca.quoraclone.model.Topic;
 import io.neca.quoraclone.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,16 +15,22 @@ public class TopicController {
     @Autowired
     private TopicService service;
 
-    @PostMapping("/")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createTopic(@RequestBody TopicDto topicDto) {
         service.save(topicDto);
     }
 
-    @GetMapping("/")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<TopicDto> getAll() {
         return service.getAll();
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public TopicDto getTopic(@PathVariable int id) {
+        return service.getTopic(id);
     }
 
 }

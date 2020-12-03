@@ -16,15 +16,13 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    // Log In
+    // Log in
     @PostMapping("/login")
     public AuthenticationResponse login(@RequestBody LoginRequest loginRequest) {
         return authService.login(loginRequest);
-
-//        return new ResponseEntity<>("You're logged in", HttpStatus.OK);
     }
 
-    // Sign Up
+    // Sign up
     @PostMapping("/signup")
     public ResponseEntity<String> signUp(@RequestBody RegistrationRequest registrationRequest) {
         authService.signUp(registrationRequest);
@@ -32,7 +30,7 @@ public class AuthController {
         return new ResponseEntity<>("User Registered Successfully", HttpStatus.OK);
     }
 
-    // Verification Link
+    // Verification link
     @GetMapping("/accountVerification/{token}")
     public ResponseEntity<String> verification(@PathVariable String token) {
         authService.verifyAccount(token);

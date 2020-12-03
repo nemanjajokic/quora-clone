@@ -17,12 +17,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class AuthService {
 
     @Autowired
@@ -42,8 +43,6 @@ public class AuthService {
     private String verificationLinkPrefix;
 
     public AuthenticationResponse login(LoginRequest loginRequest) {
-//        User user = userRepository.findByUsername(loginRequest.getUsername());
-//        if(user.isVerified())
         Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -54,7 +53,6 @@ public class AuthService {
         return new AuthenticationResponse(token, loginRequest.getUsername());
     }
 
-    @Transactional
     public void signUp(RegistrationRequest registrationRequest) {
         User user = new User();
         user.setUsername(registrationRequest.getUsername());
@@ -89,7 +87,6 @@ public class AuthService {
         return token;
     }
 
-    @Transactional
     private void verifyUser(VerificationToken verificationToken) {
         String username = verificationToken.getUser().getUsername();
         User user = userRepository.findByUsername(username);
