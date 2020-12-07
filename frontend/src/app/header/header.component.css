@@ -1,0 +1,28 @@
+.logo-text {
+    font-family: Georgia, 'Times New Roman', Times, serif;     
+    font-weight: 700;
+    font-size:200%;
+    color: rgb(185, 42, 42);
+    cursor: pointer;
+    text-decoration: none;  
+}
+
+.login, .sign-up {    
+    background-color: rgb(185, 42, 42);
+    border-color: rgb(185, 42, 42);
+    color: aliceblue;
+    border: 1px solid;
+    border-radius: 16px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .5px;
+    line-height: 24px;
+    padding: 3px 16px; 
+    text-decoration: none;
+}
+
+.login:hover, .sign-up:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
