@@ -1,0 +1,41 @@
+.register {
+    margin: 100px;
+}
+
+.card-header {
+    color: grey;
+}
+
+.card-title {
+    font-weight: bold;
+}
+
+.btn {
+    background-color: #3e78ad;
+    border-color: #3e78ad;
+    color: #fff;
+
+    float: right;
+    font-size: 15px;
+    line-height: 1.4;
+
+    box-sizing: border-box;
+    border-radius: 3px;
+
+    font-weight: 500;
+    outline: 0;
+    padding: 3px 7px 4px 7px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.form-label {
+    font-size: 11px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    font-weight: bold;
+
+    text-align: left;
+    direction: ltr;
+}

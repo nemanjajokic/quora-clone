@@ -7,22 +7,20 @@
     text-decoration: none;  
 }
 
-.login, .sign-up {    
+.sign-in {    
     background-color: rgb(185, 42, 42);
     border-color: rgb(185, 42, 42);
     color: aliceblue;
-    border: 1px solid;
     border-radius: 16px;
     text-align: center;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: .5px;
+    font-size: 14px;
+    font-weight: 600;
     line-height: 24px;
     padding: 3px 16px; 
     text-decoration: none;
 }
 
-.login:hover, .sign-up:hover {
+.sign-in:hover {
     cursor: pointer;
     opacity: 0.8;
 }
