@@ -3,6 +3,7 @@ package io.neca.quoraclone.security;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.neca.quoraclone.exception.CustomException;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,8 @@ import java.util.Map;
 public class JwtUtil {
 
     // In seconds
-    @Value("${jwt.expiration}")
+    @Value("${token.jwt.expiration}")
+    @Getter
     private long jwtExpiration;
 
     private final SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
@@ -27,10 +29,12 @@ public class JwtUtil {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
     }
 
+    /*
     // Get all claims from token
     private Claims getAllClaims(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
+    */
 
     // Validate token
     public boolean validateToken(String token) {
@@ -51,7 +55,9 @@ public class JwtUtil {
 
     // Create token
     private String createToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder().setClaims(claims).setSubject(subject)
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(Date.from(Instant.now().plusSeconds(jwtExpiration)))
                 .signWith(key).compact();

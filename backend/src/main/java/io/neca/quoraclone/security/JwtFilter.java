@@ -22,6 +22,8 @@ public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtil jwtUtil;
     @Autowired
+    private InvalidJwtUtil invalidJwtUtil;
+    @Autowired
     private UserDetailsService userDetailsService;
 
     @Override
@@ -29,6 +31,8 @@ public class JwtFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String token = jwtUtil.getTokenFromRequest(request);
+       // String username = jwtUtil.getUsername(token);
+       // int userId = getUserId(username);
 
         try {
             if (token != null && jwtUtil.validateToken(token)) {
@@ -47,4 +51,9 @@ public class JwtFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    /*
+    private int getUserId(String username) {
+        return repository.findByUsername(username).getId();
+    }
+    */
 }

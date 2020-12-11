@@ -1,14 +1,18 @@
 package io.neca.quoraclone.service;
 
+import io.neca.quoraclone.dao.InvalidJwtRepository;
 import io.neca.quoraclone.dao.VerificationTokenRepository;
 import io.neca.quoraclone.dto.AuthenticationResponse;
 import io.neca.quoraclone.dto.LoginRequest;
+import io.neca.quoraclone.dto.RefreshTokenRequest;
 import io.neca.quoraclone.dto.RegistrationRequest;
+import io.neca.quoraclone.model.InvalidJwt;
 import io.neca.quoraclone.model.User;
 import io.neca.quoraclone.dao.UserRepository;
 import io.neca.quoraclone.model.VerificationEmail;
 import io.neca.quoraclone.model.VerificationToken;
 import io.neca.quoraclone.security.JwtUtil;
+import io.neca.quoraclone.security.RefreshTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -31,28 +36,28 @@ public class AuthService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    VerificationTokenRepository verificationTokenRepository;
+    private UserService userService;
+    @Autowired
+    private InvalidJwtRepository invalidJwtRepository;
+    @Autowired
+    private VerificationTokenRepository verificationTokenRepository;
     @Autowired
     private VerificationEmailService emailService;
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    JwtUtil jwtUtil;
+    private JwtUtil jwtUtil;
+    @Autowired
+    private RefreshTokenUtil refreshTokenUtil;
 
     @Value("${verification.link.prefix}")
     private String verificationLinkPrefix;
+    @Value("${token.refresh.expiration}")
+    private Long refreshTokenExpiration;
+    @Value("${token.verification.expiration}")
+    private Long verificationTokenExpiration;
 
-    public AuthenticationResponse login(LoginRequest loginRequest) {
-        Authentication authenticate = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
-        // Authorization
-        SecurityContextHolder.getContext().setAuthentication(authenticate);
-        String token = jwtUtil.GenerateTokenWithUsername(loginRequest.getUsername());
-
-        return new AuthenticationResponse(token, loginRequest.getUsername());
-    }
-
+    // Sign Up
     public void signUp(RegistrationRequest registrationRequest) {
         User user = new User();
         user.setUsername(registrationRequest.getUsername());
@@ -67,7 +72,53 @@ public class AuthService {
                 "Activate your account here",
                 user.getEmail(),
                 "please click on the link below to activate your account: " +
-                verificationLinkPrefix + token));
+                        verificationLinkPrefix + token));
+    }
+
+    // Login
+    public AuthenticationResponse login(LoginRequest loginRequest) {
+        Authentication authenticate = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+
+        // Authorization
+        SecurityContextHolder.getContext().setAuthentication(authenticate);
+        String token = jwtUtil.GenerateTokenWithUsername(loginRequest.getUsername());
+
+        return AuthenticationResponse.builder()
+                .jwtToken(token)
+                .username(loginRequest.getUsername())
+                .refreshToken(refreshTokenUtil.generateToken().getToken())
+                .expiration(Instant.now().plusSeconds(jwtUtil.getJwtExpiration()))
+                .build();
+    }
+
+    // Logout
+    public void logout(RefreshTokenRequest tokenRequest) {
+        refreshTokenUtil.deleteToken(tokenRequest.getToken());
+        // Save JWT token in redis blacklist
+        /*
+        int userId = userService.getUserIdByUsername(tokenRequest.getUsername());
+        InvalidJwt invalidJwt = InvalidJwt.builder()
+                .userId(userId)
+                .token(jwtUtil.getTokenFromRequest(request))
+                .build();
+        invalidJwtRepository.saveToken(invalidJwt);
+         */
+    }
+
+    // Refresh Token
+    public AuthenticationResponse refreshToken(RefreshTokenRequest tokenRequest) {
+        // Will throw new Custom Exception if cannot find the token
+        refreshTokenUtil.validateToken(tokenRequest.getToken());
+
+        String token = jwtUtil.GenerateTokenWithUsername(tokenRequest.getUsername());
+
+        return AuthenticationResponse.builder()
+                .jwtToken(token)
+                .username(tokenRequest.getUsername())
+                .refreshToken(tokenRequest.getToken())
+                .expiration(Instant.now().plusSeconds(refreshTokenExpiration))
+                .build();
     }
 
     // Email Verification
@@ -82,6 +133,7 @@ public class AuthService {
         VerificationToken verificationToken = new VerificationToken();
         verificationToken.setUser(user);
         verificationToken.setToken(token);
+        verificationToken.setExpiration(Instant.now().plusSeconds(verificationTokenExpiration));
         verificationTokenRepository.save(verificationToken);
 
         return token;
