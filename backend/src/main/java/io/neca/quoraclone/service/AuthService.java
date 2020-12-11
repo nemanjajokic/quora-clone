@@ -1,12 +1,10 @@
 package io.neca.quoraclone.service;
 
-import io.neca.quoraclone.dao.InvalidJwtRepository;
 import io.neca.quoraclone.dao.VerificationTokenRepository;
 import io.neca.quoraclone.dto.AuthenticationResponse;
 import io.neca.quoraclone.dto.LoginRequest;
 import io.neca.quoraclone.dto.RefreshTokenRequest;
 import io.neca.quoraclone.dto.RegistrationRequest;
-import io.neca.quoraclone.model.InvalidJwt;
 import io.neca.quoraclone.model.User;
 import io.neca.quoraclone.dao.UserRepository;
 import io.neca.quoraclone.model.VerificationEmail;
@@ -23,7 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -35,10 +32,6 @@ public class AuthService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private InvalidJwtRepository invalidJwtRepository;
     @Autowired
     private VerificationTokenRepository verificationTokenRepository;
     @Autowired
@@ -52,8 +45,6 @@ public class AuthService {
 
     @Value("${verification.link.prefix}")
     private String verificationLinkPrefix;
-    @Value("${token.refresh.expiration}")
-    private Long refreshTokenExpiration;
     @Value("${token.verification.expiration}")
     private Long verificationTokenExpiration;
 
@@ -95,15 +86,7 @@ public class AuthService {
     // Logout
     public void logout(RefreshTokenRequest tokenRequest) {
         refreshTokenUtil.deleteToken(tokenRequest.getToken());
-        // Save JWT token in redis blacklist
-        /*
-        int userId = userService.getUserIdByUsername(tokenRequest.getUsername());
-        InvalidJwt invalidJwt = InvalidJwt.builder()
-                .userId(userId)
-                .token(jwtUtil.getTokenFromRequest(request))
-                .build();
-        invalidJwtRepository.saveToken(invalidJwt);
-         */
+        // Save JWT token in redis blacklist or whatever just to instant logout
     }
 
     // Refresh Token
@@ -117,7 +100,7 @@ public class AuthService {
                 .jwtToken(token)
                 .username(tokenRequest.getUsername())
                 .refreshToken(tokenRequest.getToken())
-                .expiration(Instant.now().plusSeconds(refreshTokenExpiration))
+                .expiration(Instant.now().plusSeconds(refreshTokenUtil.getExpiration()))
                 .build();
     }
 

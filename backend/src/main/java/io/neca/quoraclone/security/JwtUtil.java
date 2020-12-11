@@ -29,13 +29,6 @@ public class JwtUtil {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
     }
 
-    /*
-    // Get all claims from token
-    private Claims getAllClaims(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
-    }
-    */
-
     // Validate token
     public boolean validateToken(String token) {
         try {
@@ -46,7 +39,7 @@ public class JwtUtil {
         }
     }
 
-    // Generate token for specific user with username
+    // Generate token with username
     public String GenerateTokenWithUsername(String username) {
         Map<String, Object> claims = new HashMap<>();
 
