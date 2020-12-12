@@ -5,6 +5,7 @@ import io.jsonwebtoken.security.Keys;
 import io.neca.quoraclone.exception.CustomException;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -29,14 +30,30 @@ public class JwtUtil {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
     }
 
+    // Check if the token has expired
+    private boolean isTokenExpired(String token) {
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token)
+                .getBody().getExpiration().before(Date.from(Instant.now()));
+    }
+
     // Validate token
-    public boolean validateToken(String token) {
+    public boolean validateToken(String token, UserDetails userDetails) {
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            return true;
+            final String username = getUsername(token);
+            return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
         } catch(JwtException | IllegalArgumentException ex) {
             throw new CustomException("Expired or invalid JWT token");
         }
+    }
+
+    // Get the token from HTTP servlet request
+    public String getTokenFromRequest(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+
+        if(bearerToken != null && bearerToken.startsWith("Bearer "))
+            return bearerToken.substring(7);
+
+        return bearerToken;
     }
 
     // Generate token with username
@@ -54,16 +71,6 @@ public class JwtUtil {
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(Date.from(Instant.now().plusSeconds(jwtExpiration)))
                 .signWith(key).compact();
-    }
-
-    // Get the token from HTTP servlet request
-    public String getTokenFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-
-        if(bearerToken != null && bearerToken.startsWith("Bearer "))
-            return bearerToken.substring(7);
-
-        return bearerToken;
     }
 
 }

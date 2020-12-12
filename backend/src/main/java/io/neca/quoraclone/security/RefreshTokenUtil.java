@@ -24,25 +24,19 @@ public class RefreshTokenUtil {
     @Getter
     private Long expiration;
 
+    public boolean isRefreshTokenExpired(String token) {
+        RefreshToken refreshToken = repository.findByToken(token).orElseThrow(() -> new CustomException("Invalid refresh token"));
+        return refreshToken.getExpiration().isBefore(Instant.now());
+    }
+
     public RefreshToken generateToken() {
         String token = UUID.randomUUID().toString();
         RefreshToken refreshToken = new RefreshToken();
+        // implement refresh token encoding
         refreshToken.setToken(token);
-        refreshToken.setCreated(Instant.now());
+        refreshToken.setExpiration(Instant.now().plusSeconds(expiration));
 
         return repository.save(refreshToken);
-    }
-
-    public void validateToken(String token) {
-        repository.findByToken(token).orElseThrow(() -> new CustomException("Invalid refresh token"));
-        // Check token expiration
-         // Optional<RefreshToken> token1 = repository.findByToken(token);
-         // if(token1.isPresent()) {
-         //     int comparison = token1.get().getCreated().plusSeconds(expiration).compareTo(Instant.now());
-         //     return comparison > 0;
-         // } else {
-         //     return false;
-         // }
     }
 
     public void deleteToken(String token) {

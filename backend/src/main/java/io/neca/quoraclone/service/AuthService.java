@@ -5,6 +5,7 @@ import io.neca.quoraclone.dto.AuthenticationResponse;
 import io.neca.quoraclone.dto.LoginRequest;
 import io.neca.quoraclone.dto.RefreshTokenRequest;
 import io.neca.quoraclone.dto.RegistrationRequest;
+import io.neca.quoraclone.exception.CustomException;
 import io.neca.quoraclone.model.User;
 import io.neca.quoraclone.dao.UserRepository;
 import io.neca.quoraclone.model.VerificationEmail;
@@ -91,17 +92,18 @@ public class AuthService {
 
     // Refresh Token
     public AuthenticationResponse refreshToken(RefreshTokenRequest tokenRequest) {
-        // Will throw new Custom Exception if cannot find the token
-        refreshTokenUtil.validateToken(tokenRequest.getToken());
+        if(!refreshTokenUtil.isRefreshTokenExpired(tokenRequest.getToken())) {
+            String token = jwtUtil.GenerateTokenWithUsername(tokenRequest.getUsername());
 
-        String token = jwtUtil.GenerateTokenWithUsername(tokenRequest.getUsername());
-
-        return AuthenticationResponse.builder()
-                .jwtToken(token)
-                .username(tokenRequest.getUsername())
-                .refreshToken(tokenRequest.getToken())
-                .expiration(Instant.now().plusSeconds(refreshTokenUtil.getExpiration()))
-                .build();
+            return AuthenticationResponse.builder()
+                    .jwtToken(token)
+                    .username(tokenRequest.getUsername())
+                    .refreshToken(tokenRequest.getToken())
+                    .expiration(Instant.now().plusSeconds(refreshTokenUtil.getExpiration()))
+                    .build();
+        } else {
+            throw new CustomException("Invalid or expired refresh token");
+        }
     }
 
     // Email Verification
@@ -109,6 +111,10 @@ public class AuthService {
     public void verifyAccount(String token) {
         VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
         verifyUser(verificationToken);
+    }
+
+    private boolean isVerificationTokenExpired(String token) {
+        return verificationTokenRepository.findByToken(token).getExpiration().isBefore(Instant.now());
     }
 
     private String generateVerificationToken(User user) {
@@ -123,10 +129,12 @@ public class AuthService {
     }
 
     private void verifyUser(VerificationToken verificationToken) {
-        String username = verificationToken.getUser().getUsername();
-        User user = userRepository.findByUsername(username);
-        user.setVerified(true);
-        userRepository.save(user);
+        if(!isVerificationTokenExpired(verificationToken.getToken())) {
+            String username = verificationToken.getUser().getUsername();
+            User user = userRepository.findByUsername(username);
+            user.setVerified(true);
+            userRepository.save(user);
+        }
     }
 
 }
