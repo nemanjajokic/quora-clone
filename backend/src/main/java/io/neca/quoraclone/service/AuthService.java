@@ -51,6 +51,8 @@ public class AuthService {
 
     // Sign Up
     public void signUp(RegistrationRequest registrationRequest) {
+        // Implement method to check if username exists in db
+        // if(!userRepository.existsUserByUsername(registrationRequest.getUsername()))
         User user = new User();
         user.setUsername(registrationRequest.getUsername());
         user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
