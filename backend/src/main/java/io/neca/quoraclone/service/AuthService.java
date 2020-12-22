@@ -101,7 +101,7 @@ public class AuthService {
                     .jwtToken(token)
                     .username(tokenRequest.getUsername())
                     .refreshToken(tokenRequest.getToken())
-                    .expiration(Instant.now().plusSeconds(refreshTokenUtil.getExpiration()))
+                    .expiration(Instant.now().plusSeconds(jwtUtil.getJwtExpiration()))
                     .build();
         } else {
             throw new CustomException("Invalid or expired refresh token");
