@@ -108,6 +108,13 @@ public class AuthService {
         }
     }
 
+    public User getCurrentUser() {
+        org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User)
+                SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return userRepository.findByUsername(user.getUsername());
+    }
+
     // Email Verification
 
     public void verifyAccount(String token) {

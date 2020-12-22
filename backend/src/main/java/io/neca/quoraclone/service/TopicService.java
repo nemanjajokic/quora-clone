@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
 public class TopicService {
 
     @Autowired
-    TopicRepository repository;
+    private TopicRepository repository;
     @Autowired
-    TopicMapper mapper;
+    private TopicMapper mapper;
 
     public void save(TopicDto topicDto) {
         Topic topic = mapper.toEntity(topicDto);
