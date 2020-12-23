@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { LoginRequest } from './login-request';
 import { SignUpRequest } from './sign-up-request';
@@ -16,7 +17,7 @@ export class SignInComponent implements OnInit {
   signUpForm: FormGroup;
   loginForm: FormGroup;
 
-  constructor(private service: AuthService) {
+  constructor(private service: AuthService, private router: Router) {
     this.signUpRequest = {
       username: "",
       password: "",
@@ -40,6 +41,14 @@ export class SignInComponent implements OnInit {
     });
   }
 
+  redirectToHome() {
+    this.router.navigateByUrl("");
+  }
+
+  redirectToSignIn() {
+    this.router.navigate(["/sign-in"]);
+  }
+
   signUp() {
     this.signUpRequest.username = this.signUpForm.get("username").value;
     this.signUpRequest.password = this.signUpForm.get("password").value;
@@ -47,6 +56,7 @@ export class SignInComponent implements OnInit {
 
     this.service.signUp(this.signUpRequest).subscribe((data) => {
       console.log(data);
+      this.redirectToSignIn();
     });
   }
 
@@ -56,6 +66,7 @@ export class SignInComponent implements OnInit {
 
     this.service.login(this.loginRequest).subscribe((data) => {
       console.log(data);
+      this.redirectToHome();
     });
   }
 

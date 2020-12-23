@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { AuthenticationResponse } from './sign-in/authentication-response';
 import { LoginRequest } from './sign-in/login-request';
 import { SignUpRequest } from './sign-in/sign-up-request';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,11 @@ import { map } from 'rxjs/operators';
 export class AuthService {
 
   private url = "http://localhost:8080/api/auth";
+
+  refreshTokenRequest = {
+    username: this.localStorage.retrieve("username"),
+    token: this.localStorage.retrieve("refreshToken")
+  }
 
   constructor(private http: HttpClient, private localStorage: LocalStorageService) { }
 
@@ -27,6 +32,28 @@ export class AuthService {
       this.localStorage.store("refreshToken", data.refreshToken);
       this.localStorage.store("expiration", data.expiration);
     }));
+  }
+
+  getJwt() {
+    return this.localStorage.retrieve("jwtToken");
+  }
+
+  refreshToken() {
+    return this.http.post<AuthenticationResponse>(`${this.url}/refresh/token`, this.refreshTokenRequest).pipe(
+      tap((token) => {
+        this.localStorage.clear("jwtToken");
+        this.localStorage.clear("expiration");
+        this.localStorage.store("jwtToken", token.jwtToken);
+        this.localStorage.store("expiration", token.expiration);
+      })
+    )
+  }
+
+  localStorageClearAll() {
+    this.localStorage.clear('jwtToken');
+    this.localStorage.clear('username');
+    this.localStorage.clear('refreshToken');
+    this.localStorage.clear('expiration');
   }
 
 }
