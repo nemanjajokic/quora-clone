@@ -1,0 +1,157 @@
+[33mcommit c8eb4f1b18598b988f7638cc504dcff4dc20a2a4[m[33m ([m[1;36mHEAD -> [m[1;32mdev[m[33m)[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Thu Dec 24 17:58:41 2020 +0100
+
+    answer api
+
+[33mcommit 45efe65d029d950e92a20256e04f1039a89dbfe1[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Wed Dec 23 19:57:50 2020 +0100
+
+    authorization
+    
+    token refreshing and initial question component
+
+[33mcommit fd1bd744b4c2187f1bd6eb71b32a0643f991bf88[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Wed Dec 23 19:53:26 2020 +0100
+
+    security config
+    
+    cors errors
+
+[33mcommit ef3d477a114fbfffa7e2184e54b00043370b4368[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Tue Dec 22 18:54:48 2020 +0100
+
+    question api
+
+[33mcommit b945c687df460f9e4443c760496c266f09484644[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Tue Dec 22 12:34:35 2020 +0100
+
+    expiration time
+    
+    changed expiration time in response from refresh token to jwt expiration
+
+[33mcommit e2cee33ec9b5ea9962f189f176a0074e820e52ba[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Sat Dec 19 15:34:48 2020 +0100
+
+    sign in
+    
+    sign up and login implementation
+
+[33mcommit e56a87ebe6201c14e389e80d45d9828de7ed1c52[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Fri Dec 18 15:06:18 2020 +0100
+
+    cors config and validation
+    
+    CORS configuration and server side validation for registration request
+
+[33mcommit 195d7ec6137880f7c3c544389880bb065d93c62b[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Wed Dec 16 22:05:20 2020 +0100
+
+    swagger
+    
+    swagger ui with authorization
+
+[33mcommit 822c3e9ae50963d67592eb1feb8f1d15bd086300[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Tue Dec 15 19:55:22 2020 +0100
+
+    initial home page look
+
+[33mcommit eca3a796f7320f2aa182531793ad647ecbf1975e[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Sat Dec 12 21:55:39 2020 +0100
+
+    implemented expiration for all tokens
+
+[33mcommit 06c8a484019e2d7c170ccc59bae2d918b9b9cc37[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Fri Dec 11 17:23:37 2020 +0100
+
+    refactoring
+
+[33mcommit e693324a548ffbdfa3c9528286c4a2358841f948[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Fri Dec 11 15:59:07 2020 +0100
+
+    refresh token
+    
+    refresh token without properly implemented logout function
+
+[33mcommit e171b97fe697d9edd22960423df1be92ef3a7927[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Tue Dec 8 14:19:29 2020 +0100
+
+    sign-in
+    
+    initial form
+
+[33mcommit 7ca706121272dd66e89ec4fe6336fb8d14529b95[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Mon Dec 7 22:11:14 2020 +0100
+
+    header component
+
+[33mcommit 4c43acf9641fa338597d01467b40ad675b0413bd[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Thu Dec 3 20:57:49 2020 +0100
+
+    code refactoring
+
+[33mcommit a692b1b2ede9ee2d4e79a88eac056b720767b861[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Wed Dec 2 17:40:22 2020 +0100
+
+    jwt authentication
+
+[33mcommit 9f6ac309fa5cb0856f072049c51a6ba9675369fe[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Tue Dec 1 21:50:38 2020 +0100
+
+    working on jwt authorization
+
+[33mcommit 654c00c0516e750ea3c0adca2b3390075aba9b5f[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Mon Nov 30 22:10:02 2020 +0100
+
+    authentication
+
+[33mcommit c00b021d6d5691ff22a6eb4e0b64c0cc2cf8d3da[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Sat Nov 28 20:26:11 2020 +0100
+
+    minor changes
+    
+    initial controllers and dependency fixes
+
+[33mcommit bbe04cc974056911216e3bb3470cdc319827efc6[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Sat Nov 28 15:10:09 2020 +0100
+
+    user verification done
+
+[33mcommit e436868f98db03685a1686c24631afb78ab36e66[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Fri Nov 27 22:14:38 2020 +0100
+
+    security
+    
+    user registration and verification with fake smtp server
+
+[33mcommit 7e2a037494dac0820cb65c415ca5f2d9c1b12fd9[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Thu Nov 26 19:24:54 2020 +0100
+
+    initial entities
+
+[33mcommit 0e6e19c55eda4410e1a22a526df2acee28d296a9[m
+Author: necayoka <necayoka@gmail.com>
+Date:   Thu Nov 26 18:04:54 2020 +0100
+
+    initial upload
