@@ -1,0 +1,19 @@
+h6.my-4 {
+    margin: 15px;
+}
+
+.nav-link {
+    cursor: pointer;
+    text-decoration: none;
+    color: #666;
+    font-size: 14px;
+    letter-spacing: .5px;
+}
+
+.nav-pills .nav-link:hover{
+    background:#edf2f6;
+}
+
+.topic {
+    color: #666;
+}

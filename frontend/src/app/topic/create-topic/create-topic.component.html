@@ -1,0 +1,53 @@
+<div class="create-topic">
+    <h1>Create new topic</h1>
+
+    <ng-template #content let-c="close" let-d="dismiss">
+        <!-- header -->
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Create Topic</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <!-- body -->
+        <div class="modal-body">
+            <form [formGroup]="topicForm" (ngSubmit)="save()">
+                <div class="form-group">
+                    <div class="form-label"><label for="name">Name</label></div>
+                    <input type="text" class="form-control" [formControlName]="'name'" required>
+                </div>
+                <div class="form-group">
+                    <div class="form-label"><label for="description">Description</label></div>
+                    <textarea class="form-control" name="description" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Create topic</button>
+            </form>
+        </div>
+    </ng-template>
+    <!-- button -->
+    <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Open Input Form</button>
+
+</div>
+
+
+
+<!--<div class="card">
+        <div class="card-body">
+
+            <form [formGroup]="topicForm" (ngSubmit)="save()">
+
+                <div class="form-group">
+                    <div class="form-label"><label for="name">Name</label></div>
+                    <input type="text" class="form-control" [formControlName]="'name'" required>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-label"><label for="description">Description</label></div>
+                    <textarea class="form-control" name="description" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create topic</button>
+            </form>
+
+        </div>
+    </div>-->
