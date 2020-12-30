@@ -11,36 +11,9 @@
         </div>
         <!-- end oftopics -->
         
-        <!-- testing question api -->
+        <!-- questions -->
         <div class="col-lg-7" >
-            <div *ngFor="let question of questions">
-            <!-- question info -->
-            <div class="ui-block">
-                <article class="post">
-                    <div class="m-link">
-                        <a routerLink="" class="question-title">
-                            <h4>{{question.name}}</h4>
-                        </a>
-                    </div>
-                    <div class="post__author author inline-items">
-                        <img src="https://i.imgur.com/TRdKQjq.jpeg" alt="author">
-                        <div class="author-date">
-                            <a class="h6 user">{{question.userName}}</a>
-                            <div class="date">
-                                <time class="published">
-                                    {{question.duration}}
-                                </time>
-                            </div>
-                        </div> 
-                    </div>
-                    <p>{{question.description}}</p>
-                    <div class="post-additional-info inline-items">
-                        <p>upwote comments downwote icons</p>
-                    </div>
-                </article>
-            </div>
-            <!-- question info end -->
-            </div>
+            <app-question-list></app-question-list>
         </div>
 
         <!-- improve your feed -->

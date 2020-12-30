@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Question } from '../question/question';
-import { QuestionService } from '../question/question.service';
 
 @Component({
   selector: 'app-home',
@@ -9,13 +7,7 @@ import { QuestionService } from '../question/question.service';
 })
 export class HomeComponent implements OnInit {
 
-  questions: Array<Question> = [];
-
-  constructor(private service: QuestionService) {
-    this.service.getAllQuestions().subscribe(data => {
-      this.questions = data;
-    })
-  }
+  constructor() { }
 
   ngOnInit(): void {
   }

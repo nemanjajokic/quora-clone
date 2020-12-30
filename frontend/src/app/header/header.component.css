@@ -24,3 +24,11 @@
     cursor: pointer;
     opacity: 0.8;
 }
+
+.profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%; 
+    overflow: hidden;
+    margin-right: 12px;
+}

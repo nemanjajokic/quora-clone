@@ -10,12 +10,12 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { TokenInterceptor } from './auth/token-interceptor';
-import { CreateTopicComponent } from './topic/create-topic/create-topic.component';
 import { TopicListComponent } from './topic/topic-list/topic-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CreateQuestionComponent } from './question/create-question/create-question.component';
 import { QuestionListComponent } from './question/question-list/question-list.component';
 import { FeedComponent } from './feed/feed.component';
+import { UserProfileComponent } from './profile/user-profile/user-profile.component';
 
 
 @NgModule({
@@ -24,11 +24,11 @@ import { FeedComponent } from './feed/feed.component';
     HeaderComponent,
     SignInComponent,
     HomeComponent,
-    CreateTopicComponent,
     TopicListComponent,
     FeedComponent,
     CreateQuestionComponent,
-    QuestionListComponent
+    QuestionListComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

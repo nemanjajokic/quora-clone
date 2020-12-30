@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { LocalStorageService } from 'ngx-webstorage';
 import { Observable } from 'rxjs';
 import { AuthenticationResponse } from './sign-in/authentication-response';
@@ -24,7 +24,7 @@ export class AuthService {
   signUp(signUpRequest: SignUpRequest): Observable<Object> {
     return this.http.post(`${this.url}/signup`, signUpRequest, {responseType: "text"});
   }
-
+  // test
   login(loginRequest: LoginRequest) {
     return this.http.post<AuthenticationResponse>(`${this.url}/login`, loginRequest).pipe(map(data => {
       this.localStorage.store("jwtToken", data.jwtToken);
@@ -33,9 +33,18 @@ export class AuthService {
       this.localStorage.store("expiration", data.expiration);
     }));
   }
+  // test
+  logout() {
+    this.http.post(`${this.url}/logout`, this.refreshTokenRequest);
+    this.localStorageClearAll();
+  }
 
   getJwt() {
     return this.localStorage.retrieve("jwtToken");
+  }
+
+  getuserName() {
+    return this.localStorage.retrieve("username");
   }
 
   refreshToken() {
@@ -54,6 +63,10 @@ export class AuthService {
     this.localStorage.clear('username');
     this.localStorage.clear('refreshToken');
     this.localStorage.clear('expiration');
+  }
+
+  isLoggedIn() {
+    return !!this.getJwt();
   }
 
 }

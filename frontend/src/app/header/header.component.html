@@ -1,10 +1,106 @@
 <header>
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+        <!-- logo -->
         <div class="flex-grow-1">
             <a routerLink="" class="logo-text">Quora Clone</a>
         </div>
-        <div class="flex-grow-1 float-right">        
-            <a routerLink="/sign-in" class="float-right sign-in mr-2">Sign In</a>
+        <!-- search bar -->
+        <!--
+        <div class="flex-grow-1">
+            <input id="typeahead-basic" type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search"/>
+        </div>
+        -->
+        <!-- profile -->
+        <div *ngIf="isLoggedIn">
+            <div ngbDropdown>
+                <img class="profile" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" 
+                    id="dropdownConfig" ngbDropdownToggle>
+                <div ngbDropdownMenu aria-labelledby="dropdownConfig">
+                    <button ngbDropdownItem routerLink="/user-profile">Profile</button>
+                    <button ngbDropdownItem (click)="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+        <!-- sign in -->
+        <div *ngIf="!isLoggedIn">
+            <div class="flex-grow-1 float-right">        
+                <a routerLink="/sign-in" class="float-right sign-in mr-2">Sign In</a>
+            </div>
+        </div>
+        <!-- add question -->
+        <div *ngIf="isLoggedIn">
+            <div class="flex-grow-1 float-right">        
+                <a routerLink="/create-question" class="float-right sign-in mr-2">Add Question</a>
+            </div>
         </div>
     </nav>  
 </header>
+
+<!-- 
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+        !-- logo --
+        <div class="flex-grow-1">
+            <a routerLink="" class="logo-text">Quora Clone</a>
+        </div>
+        !-- search bar --
+        
+        !-- profile --
+
+        !-- !isLoggedIn --
+        <div *ngIf="!isLoggedIn">
+            <div class="flex-grow-1 float-right">        
+                <a routerLink="/sign-in" class="float-right sign-in mr-2">Sign In</a>
+            </div>
+        </div>
+        !-- isLoggedIn --
+        <div *ngIf="isLoggedIn">
+            <div class="flex-grow-1 float-right">        
+                <a routerLink="/create-question" class="float-right sign-in mr-2">Add Question</a>
+            </div>
+        </div>
+    </nav>
+ -->
+
+ <!-- 
+     <div class="dropdown">
+            <img class="profile" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" role="button">
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="#">Profile</a>
+                <a class="dropdown-item" href="#">Logout</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+        </div>
+  -->
+
+  <!-- 
+      <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+        !-- logo --
+        <div class="flex-grow-1">
+            <a routerLink="" class="logo-text">Quora Clone</a>
+        </div>
+        !-- search bar --
+        
+        !-- !isLoggedIn --
+        <div *ngIf="!isLoggedIn">
+            !-- sign in --
+            <div class="flex-grow-1 float-right">        
+                <a routerLink="/sign-in" class="float-right sign-in mr-2">Sign In</a>
+            </div>
+        </div>
+        !-- isLoggedIn --
+        <div *ngIf="isLoggedIn">
+            !-- profile --
+            <div ngbDropdown>
+                <img class="profile" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" id="dropdownConfig" ngbDropdownToggle>
+                <div ngbDropdownMenu aria-labelledby="dropdownConfig">
+                    <button ngbDropdownItem>Profile</button>
+                    <button ngbDropdownItem>Logout</button>
+                </div>
+            </div>
+            !-- add question --
+            <div class="flex-grow-1 float-right">        
+                <a routerLink="/create-question" class="float-right sign-in mr-2">Add Question</a>
+            </div>
+        </div>
+    </nav> 
+   -->
