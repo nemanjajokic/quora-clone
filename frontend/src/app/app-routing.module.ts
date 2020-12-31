@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SignInComponent } from './auth/sign-in/sign-in.component';
+import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { UserProfileComponent } from './profile/user-profile/user-profile.component';
 import { CreateQuestionComponent } from './question/create-question/create-question.component';
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: "topic-list", component: TopicListComponent },
   { path: "create-question", component: CreateQuestionComponent },
   { path: "question-list", component: QuestionListComponent },
-  { path: "user-profile", component: UserProfileComponent }
+  { path: "user-profile", component: UserProfileComponent },
+  { path: "header", component: HeaderComponent }
 ];
 
 @NgModule({

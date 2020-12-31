@@ -1,5 +1,6 @@
 package io.neca.quoraclone.controller;
 
+import io.neca.quoraclone.dto.QuestionAnswerResponse;
 import io.neca.quoraclone.dto.QuestionRequest;
 import io.neca.quoraclone.dto.QuestionResponse;
 import io.neca.quoraclone.service.QuestionService;
@@ -32,6 +33,11 @@ public class QuestionController {
     @ResponseStatus(HttpStatus.OK)
     public QuestionResponse getQuestion(@PathVariable int id) {
         return service.getQuestion(id);
+    }
+
+    @GetMapping("/all")
+    public List<QuestionAnswerResponse> getQuestionsWithAnswers() {
+        return service.getAll();
     }
 
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { AnswerRequest } from 'src/app/answer/answer-request';
 import { AnswerResponse } from 'src/app/answer/answer-response';
 import { AnswerService } from 'src/app/answer/answer.service';
 import { Question } from '../question';
@@ -11,23 +13,41 @@ import { QuestionService } from '../question.service';
 })
 export class QuestionListComponent implements OnInit {
 
-  questions: Array<Question> = [];  // let answer of question.answers
+  questions: Array<Question> = [];
   isCollapsed: boolean[] = [];
-  answers: Array<AnswerResponse> = []; // make 2D array or whatever to be specific for every question
+  questionId: number = 0;
+
+  answerForm: FormGroup;
+  answerRequest: AnswerRequest;
 
   constructor(private questionService: QuestionService, private answerService: AnswerService) {
-    this.questionService.getAllQuestions().subscribe(data => {
+    this.questionService.getAll().subscribe(data => {
+      this.questions = data;
+    });
+    this.answerRequest = {
+      body: "",
+      questionId: this.questionId
+    }
+  }
+
+  ngOnInit(): void {
+    this.answerForm = new FormGroup({
+      body: new FormControl("")
+    });
+  }
+
+  refresh() {
+    this.questionService.getAll().subscribe(data => {
       this.questions = data;
     });
   }
 
-  ngOnInit(): void {
-  }
+  saveAnswer() {
+    this.answerRequest.body = this.answerForm.get("body").value;
+    this.answerRequest.questionId = this.questionId;
 
-  getAnswers(id: number) {
-    this.answerService.getAllAnswersForQuestion(id).subscribe(data => {
-      this.answers = data;
-    });
+    this.answerService.save(this.answerRequest).subscribe(() => this.refresh());
+    this.answerForm.reset();
   }
 
 }

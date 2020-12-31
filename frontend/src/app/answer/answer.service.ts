@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AnswerRequest } from './answer-request';
 import { AnswerResponse } from './answer-response';
 
 @Injectable({
@@ -14,6 +15,10 @@ export class AnswerService {
 
   getAllAnswersForQuestion(id: number): Observable<Array<AnswerResponse>> {
     return this.http.get<Array<AnswerResponse>>(`${this.url}/${id}`);
+  }
+
+  save(answerRequest: AnswerRequest) {
+    return this.http.post("http://localhost:8080/api/answer", answerRequest);
   }
 
 }
