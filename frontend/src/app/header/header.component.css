@@ -31,4 +31,5 @@
     border-radius: 100%; 
     overflow: hidden;
     margin-right: 12px;
+    cursor: pointer;
 }

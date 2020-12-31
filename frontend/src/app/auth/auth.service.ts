@@ -12,6 +12,7 @@ import { map, tap } from 'rxjs/operators';
 })
 export class AuthService {
 
+  @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
   private url = "http://localhost:8080/api/auth";
 
   refreshTokenRequest = {
@@ -31,6 +32,7 @@ export class AuthService {
       this.localStorage.store("username", data.username);
       this.localStorage.store("refreshToken", data.refreshToken);
       this.localStorage.store("expiration", data.expiration);
+      this.loggedIn.emit(true);
     }));
   }
   // test
