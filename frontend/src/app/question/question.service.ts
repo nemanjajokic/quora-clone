@@ -23,4 +23,8 @@ export class QuestionService {
     return this.http.get<Array<Question>>("http://localhost:8080/api/question/all");
   }
   
+  getAllByTopic() {
+    // implementation
+  }
+
 }
