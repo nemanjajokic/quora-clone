@@ -44,7 +44,7 @@
                             
                             <form [formGroup]="answerForm" (ngSubmit)="saveAnswer()" class="inline-items">
                                 <div class="text-area">
-                                    <textarea class="form-control text" [formControlName]="'body'" rows="1" cols="50" placeholder="Write your answer here..." oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea> 
+                                    <textarea class="form-control text" [formControlName]="'body'" required rows="1" cols="50" placeholder="Write your answer here..." oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea> 
                                 </div>
                                 <button class="btn btn-primary" type="submit">Add Comment</button>
                             </form>

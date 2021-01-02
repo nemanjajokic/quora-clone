@@ -44,11 +44,11 @@
                             <form [formGroup]="loginForm" (ngSubmit)="login()">
                                 <!-- username -->
                                 <div class="form-group">
-                                    <input type="text" class="form-control" [formControlName]="'username'" placeholder="Username">
+                                    <input type="text" class="form-control" [formControlName]="'username'" placeholder="Username" required>
                                 </div>
                                 <!-- password -->
                                 <div class="form-group">
-                                    <input type="password" class="form-control" [formControlName]="'password'" placeholder="Password">
+                                    <input type="password" class="form-control" [formControlName]="'password'" placeholder="Password" required>
                                     <small id="passwordHelp" class="form-text text-muted">Don't share your password with anyone else.</small>
                                 </div>
                                 <!-- button -->

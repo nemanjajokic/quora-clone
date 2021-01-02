@@ -36,8 +36,8 @@ export class SignInComponent implements OnInit {
       email: new FormControl("", Validators.required)
     });
     this.loginForm = new FormGroup({
-      username: new FormControl(""),
-      password: new FormControl("")
+      username: new FormControl("", Validators.required),
+      password: new FormControl("", Validators.required)
     });
   }
 
@@ -56,7 +56,7 @@ export class SignInComponent implements OnInit {
 
     this.service.signUp(this.signUpRequest).subscribe((data) => {
       console.log(data);
-      this.redirectToSignIn();
+      this.signUpForm.reset();
     });
   }
 

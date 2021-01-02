@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Topic } from 'src/app/topic/topic';
@@ -20,8 +20,6 @@ export class CreateQuestionComponent implements OnInit {
 
   topicForm: FormGroup;
   topic: Topic;
-  createTopicName = new FormControl("");
-  createTopicDescription = new FormControl("");
 
   constructor(private topicService: TopicService, private questionService: QuestionService, 
     private router: Router, private service: TopicService, private modalService: NgbModal) {
@@ -30,10 +28,6 @@ export class CreateQuestionComponent implements OnInit {
       description: "",
       topicName: ""
     }
-    this.topicForm = new FormGroup({
-      createTopicName: new FormControl(""),
-      createTopicDescription: new FormControl("")
-    })
     this.topic = {
       name: "",
       description: ""
@@ -45,10 +39,14 @@ export class CreateQuestionComponent implements OnInit {
       this.topics = data;
     });
     this.questionForm = new FormGroup({
-      name: new FormControl(""),
-      description: new FormControl(""),
-      topicName: new FormControl("")
+      name: new FormControl("", Validators.required),
+      description: new FormControl("", Validators.required),
+      topicName: new FormControl("", Validators.required)
     });
+    this.topicForm = new FormGroup({
+      createTopicName: new FormControl("", Validators.required),
+      createTopicDescription: new FormControl("", Validators.required)
+    })
   }
 
   open(content) {

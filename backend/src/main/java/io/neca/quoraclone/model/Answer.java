@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.Instant;
 
 @Data
@@ -17,6 +18,7 @@ public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotBlank(message = "Answer body is mandatory")
     private String body;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "questionId", referencedColumnName = "id")

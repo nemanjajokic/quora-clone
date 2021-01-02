@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AnswerRequest } from 'src/app/answer/answer-request';
 import { AnswerResponse } from 'src/app/answer/answer-response';
 import { AnswerService } from 'src/app/answer/answer.service';
@@ -32,7 +32,7 @@ export class QuestionListComponent implements OnInit {
 
   ngOnInit(): void {
     this.answerForm = new FormGroup({
-      body: new FormControl("")
+      body: new FormControl("", Validators.required)
     });
   }
 

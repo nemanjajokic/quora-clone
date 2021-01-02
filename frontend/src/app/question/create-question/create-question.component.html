@@ -23,7 +23,7 @@
                         </div>
                         <div class="form-group">
                             <div class="form-label"><label for="createTopicDescription">Description</label></div>
-                            <textarea class="form-control" [formControlName]="'createTopicDescription'" rows="3"></textarea>
+                            <textarea class="form-control" rows="3" [formControlName]="'createTopicDescription'" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Create topic</button>
                     </form>
@@ -37,7 +37,7 @@
                 <div class="form-inline">
                     <!-- select topic -->
                     <div class="form-group">
-                        <select class="form-control" [formControlName]="'topicName'">
+                        <select class="form-control" [formControlName]="'topicName'" required>
                             <option value="" selected disabled>Select Topic</option>
                             <option *ngFor="let topic of topics">{{topic.name}}</option>
                         </select>
@@ -51,7 +51,7 @@
                 <!-- description -->
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea class="form-control" rows="5" [formControlName]="'description'"></textarea>
+                    <textarea class="form-control" rows="5" [formControlName]="'description'" required></textarea>
                 </div>
                 <div class="col-auto my-1">
                     <button type="submit" class="btn btn-primary">Add Question</button>

@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import javax.validation.constraints.NotBlank;
 
 @Data
 @Entity
@@ -17,6 +17,8 @@ public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotBlank(message = "Name is mandatory")
     private String name;
+    @NotBlank(message = "Description is mandatory")
     private String description;
 }
