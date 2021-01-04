@@ -11,7 +11,6 @@ import io.neca.quoraclone.dto.QuestionResponse;
 import io.neca.quoraclone.exception.CustomException;
 import io.neca.quoraclone.mapper.AnswerMapper;
 import io.neca.quoraclone.mapper.QuestionMapper;
-import io.neca.quoraclone.model.Answer;
 import io.neca.quoraclone.model.Question;
 import io.neca.quoraclone.model.Topic;
 import io.neca.quoraclone.model.User;
@@ -19,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,7 +38,7 @@ public class QuestionService {
     @Autowired
     private AnswerRepository answerRepository;
     @Autowired
-    private AnswerMapper aMapper;
+    private AnswerMapper answerMapper;
 
     public void save(QuestionRequest request) {
         Topic topic = topicRepository.findByName(request.getTopicName());
@@ -61,26 +59,48 @@ public class QuestionService {
         return mapper.toDto(question);
     }
 
+    public List<QuestionResponse> getAllQuestionsForTopic(int id) {
+        return questionRepository.findByTopicId(id).stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    // An additional methods to more easily display the content in the angular
+
     public List<QuestionAnswerResponse> getAll() {
-//        List<QuestionResponse> questions = getAllQuestions();
-//        List<AnswerResponse> answers = questions.stream().map(q -> answerRepository.findAllByQuestion(q)).collect(Collectors.toList());
         List<Question> questions = questionRepository.findAll();
-        List<QuestionAnswerResponse> responses = new LinkedList<>();
-        for(Question q : questions) {
-           QuestionAnswerResponse response = new QuestionAnswerResponse();
-           List<AnswerResponse> answerResponses = answerRepository.findAllByQuestion(q).stream().map(aMapper::toDto).collect(Collectors.toList());
-           response.setId(q.getId());
-           response.setName(q.getName());
-           response.setDescription(q.getDescription());
-           response.setTopicName(q.getTopic().getName());
-           response.setUserName(q.getUser().getUsername());
-           response.setDuration(q.getCreated().toString());
-           response.setAnswers(answerResponses);
 
-           responses.add(response);
-        }
+        return questions.stream().map(q -> {
+            List<AnswerResponse> answerResponses = answerRepository.findAllByQuestion(q).stream().map(answerMapper::toDto).collect(Collectors.toList());
+            QuestionAnswerResponse response = new QuestionAnswerResponse();
+            response.setId(q.getId());
+            response.setName(q.getName());
+            response.setDescription(q.getDescription());
+            response.setTopicName(q.getTopic().getName());
+            response.setUserName(q.getUser().getUsername());
+            response.setDuration(q.getCreated().toString());
+            response.setAnswers(answerResponses);
 
-        return responses;
+            return response;
+        }).collect(Collectors.toList());
+    }
+
+    public List<QuestionAnswerResponse> getAllForTopic(int id) {
+        List<Question> questions = questionRepository.findByTopicId(id);
+
+        return questions.stream().map(q -> {
+            List<AnswerResponse> answerResponses = answerRepository.findAllByQuestion(q).stream().map(answerMapper::toDto).collect(Collectors.toList());
+            QuestionAnswerResponse response = new QuestionAnswerResponse();
+            response.setId(q.getId());
+            response.setName(q.getName());
+            response.setDescription(q.getDescription());
+            response.setTopicName(q.getTopic().getName());
+            response.setUserName(q.getUser().getUsername());
+            response.setDuration(q.getCreated().toString());
+            response.setAnswers(answerResponses);
+
+            return response;
+        }).collect(Collectors.toList());
     }
 
 }

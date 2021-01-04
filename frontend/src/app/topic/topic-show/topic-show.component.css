@@ -1,0 +1,108 @@
+.container-fluid {
+    padding-top: 100px;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* question css */
+
+.post {
+    position: relative;
+    padding: 25px;
+    border-bottom: 1px solid #e6ecf5;
+}
+
+.post__author {
+    margin-bottom: 20px;
+}
+
+.m-link a {
+    color: #333;
+}
+
+.m-link h4 {
+    font-weight: bold;
+}
+
+.question-title {
+    cursor: pointer;
+}
+
+/* optional boxing */
+.ui-block {
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #e6ecf5;
+    margin-bottom: 15px;
+}
+
+.post__author img {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%; 
+    overflow: hidden;
+    margin-right: 12px;
+}
+
+.user {
+    cursor: pointer;
+    color: #333;
+    font-weight: 600;
+}
+
+.date, .topic {
+    color: #666;
+}
+
+.inline-items > * {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.btn {
+    font-size: 14px;
+    line-height: 1.4;
+
+    box-sizing: border-box;
+    border-radius: 16px;
+
+    font-weight: 500;
+    outline: 0;
+    padding: 3px 7px 4px 7px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.text-area {
+    margin-right: 8px;
+}
+
+.text {
+    border-radius: 25px;
+    resize:none;
+    overflow:hidden;
+}
+
+textarea {
+    width: 390px;
+}
+
+/* topic css */
+
+h6.my-4 {
+    margin: 15px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #666;
+    font-size: 14px;
+    letter-spacing: .5px;
+}
+
+.topic {
+    color: #666;
+}
+
+

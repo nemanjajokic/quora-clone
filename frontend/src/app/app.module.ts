@@ -16,6 +16,7 @@ import { CreateQuestionComponent } from './question/create-question/create-quest
 import { QuestionListComponent } from './question/question-list/question-list.component';
 import { FeedComponent } from './feed/feed.component';
 import { UserProfileComponent } from './profile/user-profile/user-profile.component';
+import { TopicShowComponent } from './topic/topic-show/topic-show.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { UserProfileComponent } from './profile/user-profile/user-profile.compon
     FeedComponent,
     CreateQuestionComponent,
     QuestionListComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    TopicShowComponent
   ],
   imports: [
     BrowserModule,

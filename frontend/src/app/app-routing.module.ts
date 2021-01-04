@@ -7,6 +7,7 @@ import { UserProfileComponent } from './profile/user-profile/user-profile.compon
 import { CreateQuestionComponent } from './question/create-question/create-question.component';
 import { QuestionListComponent } from './question/question-list/question-list.component';
 import { TopicListComponent } from './topic/topic-list/topic-list.component';
+import { TopicShowComponent } from './topic/topic-show/topic-show.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: "create-question", component: CreateQuestionComponent },
   { path: "question-list", component: QuestionListComponent },
   { path: "user-profile", component: UserProfileComponent },
-  { path: "header", component: HeaderComponent }
+  { path: "header", component: HeaderComponent },
+  { path: "topic-show/:id", component: TopicShowComponent }
 ];
 
 @NgModule({

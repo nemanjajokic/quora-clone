@@ -35,9 +35,21 @@ public class QuestionController {
         return service.getQuestion(id);
     }
 
+    @GetMapping("/topic/{id}")
+    public List<QuestionResponse> getAllForTopic(@PathVariable int id) {
+        return service.getAllQuestionsForTopic(id);
+    }
+
+    // Additional endpoints to more easily display the content in the angular
+
     @GetMapping("/all")
     public List<QuestionAnswerResponse> getQuestionsWithAnswers() {
         return service.getAll();
     }
 
+    @GetMapping("/all/{id}")
+    public List<QuestionAnswerResponse> getQuestionsWithAnswersByTopic(@PathVariable int id) {
+        return service.getAllForTopic(id);
+    }
+    
 }

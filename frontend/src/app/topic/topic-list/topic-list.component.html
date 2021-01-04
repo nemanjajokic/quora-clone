@@ -2,6 +2,6 @@
 <hr>
 <div *ngFor="let topic of topics">
     <div class="nav flex-column nav-pills nav-stacked" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-        <a class="nav-link">{{topic.name}}</a>
+        <a class="nav-link" type="button" (click)="showTopic(topic.id)">{{topic.name}}</a>
     </div>
 </div>
