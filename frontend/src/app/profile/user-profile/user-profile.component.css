@@ -1,3 +1,48 @@
+.container-fluid {
+    padding-top: 100px;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+}
+
 .profile {
-    margin: 100px;
+    position: relative;
+    padding: 25px;
+}
+
+.user {
+    margin-bottom: 20px;
+}
+
+.h2 {
+    font-weight: bold;
+    cursor: pointer;
+    color: #333;
+}
+
+/* optional boxing 
+.ui-block {
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #e6ecf5;
+    margin-bottom: 15px;
+}  */
+
+.user img {
+    width: 160px;
+    height: 160px;
+    border-radius: 100%; 
+    overflow: hidden;
+    margin-right: 24px;
+    cursor: pointer;
+}
+
+.user img:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.inline-items > * {
+    display: inline-block;
+    vertical-align: middle;
 }
