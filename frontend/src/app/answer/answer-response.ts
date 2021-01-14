@@ -4,4 +4,5 @@ export interface AnswerResponse {
     id: number;
     quesitonId: number;
     userName: string;
+    imageUri: string;
 }

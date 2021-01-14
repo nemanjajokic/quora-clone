@@ -4,8 +4,17 @@
             <div class="ui-block">
                 <article class="profile">
                     <div class="user inline-items">
+
                         <!-- https://i.imgur.com/TRdKQjq.jpeg -->
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
+                        <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author"> -->
+
+                        <div class="image-upload">
+                            <label for="file-input">
+                                <img src="http://localhost:8080/api/images/getImage/1_RDlVi7uvQyBOKmiwN-G0FA.png" alt="author">
+                            </label>
+                            <input id="file-input" type="file" (change)="onSelectFile($event)">
+                        </div>
+
                         <a class="h2 user">Mika123</a>
                     </div>
                     <p>Email address: ceca123@neca.com</p>
@@ -17,6 +26,7 @@
                     <p>Answers: 4</p>
                     <br>
                     <p>Topics: 2</p>
+
                 </article>
             </div>
         </div>

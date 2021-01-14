@@ -17,6 +17,7 @@ public class QuestionAnswerResponse {
     private String description;
     private String topicName;
     private String userName;
+    private String imageUri;
     private String duration;
     private List<AnswerResponse> answers;
 }

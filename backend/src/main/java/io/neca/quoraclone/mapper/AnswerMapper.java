@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.Instant;
+import java.util.Optional;
 
 @Configuration
 public class AnswerMapper {
@@ -34,6 +35,7 @@ public class AnswerMapper {
                 .body(answer.getBody())
                 .questionId(answer.getQuestion().getId())
                 .userName(answer.getUser().getUsername())
+                .imageUri(Optional.ofNullable(answer.getUser().getImageUri()).orElse(null))   // If exists
                 // duration
                 .duration(timeUtil.toDuration(answer.getCreated()))
                 .build();

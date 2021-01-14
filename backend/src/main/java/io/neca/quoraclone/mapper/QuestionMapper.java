@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.Instant;
+import java.util.Optional;
 
 @Configuration
 public class QuestionMapper {
@@ -37,6 +38,7 @@ public class QuestionMapper {
                 .description(question.getDescription())
                 .topicName(question.getTopic().getName())
                 .userName(question.getUser().getUsername())
+                .imageUri(Optional.ofNullable(question.getUser().getImageUri()).orElse(null))   // If exists
                 // duration
                 .duration(timeUtil.toDuration(question.getCreated()))
                 .build();

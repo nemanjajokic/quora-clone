@@ -46,3 +46,7 @@
     display: inline-block;
     vertical-align: middle;
 }
+
+.image-upload>input {
+    display: none;
+}

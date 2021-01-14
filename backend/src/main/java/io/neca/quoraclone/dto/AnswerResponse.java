@@ -14,5 +14,6 @@ public class AnswerResponse {
     private String body;
     private int questionId;
     private String userName;
+    private String imageUri;
     private String duration;
 }

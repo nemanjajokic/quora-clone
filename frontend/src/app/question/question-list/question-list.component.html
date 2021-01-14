@@ -9,8 +9,14 @@
                     </a>
                 </div>
                 <div class="post__author author inline-items">
-                    <!-- https://i.imgur.com/TRdKQjq.jpeg -->
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
+                    <!-- User profile image if exists -->
+                    <div *ngIf="question.imageUri">
+                        <img src={{question.imageUri}} alt="author">
+                    </div>
+                    <!-- Default profile image -->
+                    <div *ngIf="!question.imageUri">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
+                    </div>
                     <div class="author-date">
                         <a class="h6 user">{{question.userName}}</a>
                         <div class="date">
@@ -56,8 +62,14 @@
                         <div *ngFor="let answer of question.answers">
                             <hr>
                             <div class="post__author author inline-items">
-                                <!-- https://i.imgur.com/TRdKQjq.jpeg -->
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
+                                <!-- User profile image if exists -->
+                                <div *ngIf="answer.imageUri">
+                                    <img src={{answer.imageUri}} alt="author">
+                                </div>
+                                <!-- Default profile image -->
+                                <div *ngIf="!answer.imageUri">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
+                                </div>
                                 <div class="author-date">
                                     <a class="h6 user">{{answer.userName}}</a>
                                     <div class="date">

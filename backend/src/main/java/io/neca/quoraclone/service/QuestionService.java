@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -78,6 +79,7 @@ public class QuestionService {
             response.setDescription(q.getDescription());
             response.setTopicName(q.getTopic().getName());
             response.setUserName(q.getUser().getUsername());
+            response.setImageUri(Optional.ofNullable(q.getUser().getImageUri()).orElse(null));  // If exists
             response.setDuration(q.getCreated().toString());
             response.setAnswers(answerResponses);
 
@@ -96,6 +98,7 @@ public class QuestionService {
             response.setDescription(q.getDescription());
             response.setTopicName(q.getTopic().getName());
             response.setUserName(q.getUser().getUsername());
+            response.setImageUri(Optional.ofNullable(q.getUser().getImageUri()).orElse(null));  // If exists
             response.setDuration(q.getCreated().toString());
             response.setAnswers(answerResponses);
 

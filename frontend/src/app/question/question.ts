@@ -6,6 +6,7 @@ export class Question {
     description: string;
     topicName: string;
     userName: string;
+    imageUri: string;
     duration: string;
     answers: Array<AnswerResponse>;
 }

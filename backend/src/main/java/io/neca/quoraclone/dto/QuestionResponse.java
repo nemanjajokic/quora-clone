@@ -15,5 +15,6 @@ public class QuestionResponse {
     private String description;
     private String topicName;
     private String userName;
+    private String imageUri;
     private String duration;
 }
