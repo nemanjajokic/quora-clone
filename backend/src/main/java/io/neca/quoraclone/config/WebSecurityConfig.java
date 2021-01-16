@@ -37,10 +37,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/images/getImage/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/user/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/auth/refresh/token").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/question").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/topic").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/question/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/answer/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/topic/**").permitAll()
                 .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui/**", "/webjars/**").permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
