@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserView } from 'src/app/profile/user-view';
+import { UserService } from 'src/app/profile/user.service';
 import { AuthService } from '../auth.service';
 import { LoginRequest } from './login-request';
 import { SignUpRequest } from './sign-up-request';
@@ -16,8 +18,9 @@ export class SignInComponent implements OnInit {
   loginRequest: LoginRequest;
   signUpForm: FormGroup;
   loginForm: FormGroup;
+  userResponse: UserView;
 
-  constructor(private service: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private userService: UserService, private router: Router) {
     this.signUpRequest = {
       username: "",
       password: "",
@@ -54,7 +57,7 @@ export class SignInComponent implements OnInit {
     this.signUpRequest.password = this.signUpForm.get("password").value;
     this.signUpRequest.email = this.signUpForm.get("email").value;
 
-    this.service.signUp(this.signUpRequest).subscribe((data) => {
+    this.authService.signUp(this.signUpRequest).subscribe((data) => {
       console.log(data);
       this.signUpForm.reset();
     });
@@ -64,10 +67,23 @@ export class SignInComponent implements OnInit {
     this.loginRequest.username = this.loginForm.get("username").value;
     this.loginRequest.password = this.loginForm.get("password").value;
 
-    this.service.login(this.loginRequest).subscribe((data) => {
+    this.authService.login(this.loginRequest).subscribe((data) => {
       console.log(data);
       this.redirectToHome();
+/*
+      this.userService.getUserInfo(this.loginRequest.username).subscribe((res) => {
+        console.log(res);
+        this.userResponse = res;
+        this.redirectToHome();
+      });
+*/      
     });
+/*
+    this.userService.getUserInfo(this.loginRequest.username).subscribe((res) => {
+      console.log(res);
+      this.userResponse = res;
+    });
+*/
   }
 
 }

@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 import { ImageService } from '../image.service';
+import { UserView } from '../user-view';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -8,12 +13,20 @@ import { ImageService } from '../image.service';
 })
 export class UserProfileComponent implements OnInit {
 
-  constructor(private service: ImageService) { }
+  username: string;
+  userResponse: UserView = {} as UserView;
+
+  constructor(private service: ImageService, private userService: UserService, private authService: AuthService) { }
 
   public formData = new FormData();
   public selectedFile: File = null;
 
   ngOnInit(): void {
+    this.username = this.authService.getUserName();
+  //  this.username = this.route.snapshot.params["username"];
+    this.userService.getUserInfo(this.username).subscribe(data => {
+      this.userResponse = data;
+    });
   }
 
   onSelectFile(event) {

@@ -10,14 +10,23 @@
 
                         <div class="image-upload">
                             <label for="file-input">
-                                <img src="http://localhost:8080/api/images/getImage/1_RDlVi7uvQyBOKmiwN-G0FA.png" alt="author">
+
+                                <!-- User profile image if exists -->
+                                <div *ngIf="userResponse.imageUri">
+                                    <img src={{userResponse.imageUri}} alt="author">
+                                </div>
+                                <!-- Default profile image -->
+                                <div *ngIf="!userResponse.imageUri">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
+                                </div>
+                                
                             </label>
                             <input id="file-input" type="file" (change)="onSelectFile($event)">
                         </div>
 
-                        <a class="h2 user">Mika123</a>
+                        <a class="h2 user">{{userResponse.username}}</a>
                     </div>
-                    <p>Email address: ceca123@neca.com</p>
+                    <p>Email address: {{userResponse.email}}</p>
                     <hr>
                     <p>aN uiodaiusdn iasdni uands aoisd adnui andn aisdn iuansd ias ads ioasmdim iasodmo asmdoa mdsoi amdo</p>
                     <br>

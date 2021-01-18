@@ -13,6 +13,8 @@ import { map, tap } from 'rxjs/operators';
 export class AuthService {
 
   @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
+  @Output() username: EventEmitter<string> = new EventEmitter();
+  @Output() imageUri: EventEmitter<string> = new EventEmitter();
   private url = "http://localhost:8080/api/auth";
 
   refreshTokenRequest = {
@@ -30,9 +32,12 @@ export class AuthService {
     return this.http.post<AuthenticationResponse>(`${this.url}/login`, loginRequest).pipe(map(data => {
       this.localStorage.store("jwtToken", data.jwtToken);
       this.localStorage.store("username", data.username);
+      this.localStorage.store("imageUri", data.username);
       this.localStorage.store("refreshToken", data.refreshToken);
       this.localStorage.store("expiration", data.expiration);
       this.loggedIn.emit(true);
+      this.username.emit(data.username);
+      this.imageUri.emit(data.imageUri);
     }));
   }
   // test
@@ -45,8 +50,12 @@ export class AuthService {
     return this.localStorage.retrieve("jwtToken");
   }
 
-  getuserName() {
+  getUserName() {
     return this.localStorage.retrieve("username");
+  }
+
+  getImageUri() {
+    return this.localStorage.retrieve("imageUri");
   }
 
   refreshToken() {
@@ -63,6 +72,7 @@ export class AuthService {
   localStorageClearAll() {
     this.localStorage.clear('jwtToken');
     this.localStorage.clear('username');
+    this.localStorage.clear('imageUri');
     this.localStorage.clear('refreshToken');
     this.localStorage.clear('expiration');
   }

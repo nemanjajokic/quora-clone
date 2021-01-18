@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AnswerRequest } from 'src/app/answer/answer-request';
-import { AnswerResponse } from 'src/app/answer/answer-response';
 import { AnswerService } from 'src/app/answer/answer.service';
 import { Question } from '../question';
 import { QuestionService } from '../question.service';
