@@ -5,26 +5,27 @@ import { Question } from './question';
 import { QuestionRequest } from './question-request';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class QuestionService {
 
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
+    private url = "http://localhost:8080/api/question";
 
-  getAllQuestions(): Observable<Array<Question>> {
-    return this.http.get<Array<Question>>("http://localhost:8080/api/question");
-  }
+    getAllQuestions(): Observable<Array<Question>> {
+        return this.http.get<Array<Question>>(this.url);
+    }
 
-  save(questionRequest: QuestionRequest) {
-    return this.http.post("http://localhost:8080/api/question", questionRequest);
-  }
+    save(questionRequest: QuestionRequest) {
+        return this.http.post(this.url, questionRequest);
+    }
 
-  getAll(): Observable<Array<Question>> {
-    return this.http.get<Array<Question>>("http://localhost:8080/api/question/all");
-  }
-  
-  getAllByTopic(id: number): Observable<Array<Question>> {
-    return this.http.get<Array<Question>>("http://localhost:8080/api/question/all/" + id);
-  }
+    getAll(): Observable<Array<Question>> {
+        return this.http.get<Array<Question>>(this.url + "/all");
+    }
+
+    getAllByTopic(id: number): Observable<Array<Question>> {
+        return this.http.get<Array<Question>>(this.url + "/all/" + id);
+    }
 
 }

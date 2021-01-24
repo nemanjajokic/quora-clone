@@ -9,7 +9,7 @@ import { AuthenticationResponse } from "./sign-in/authentication-response";
     providedIn: 'root'
 })
 export class TokenInterceptor implements HttpInterceptor {
-    
+
     private isRefreshing = false;
     private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 

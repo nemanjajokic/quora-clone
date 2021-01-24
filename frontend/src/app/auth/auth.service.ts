@@ -8,75 +8,69 @@ import { SignUpRequest } from './sign-in/sign-up-request';
 import { map, tap } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AuthService {
 
-  @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
-  @Output() userName: EventEmitter<string> = new EventEmitter();
-  private url = "http://localhost:8080/api/auth";
+    @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
+    @Output() userName: EventEmitter<string> = new EventEmitter();
+    private url = "http://localhost:8080/api/auth";
 
-  refreshTokenRequest = {
-    username: this.localStorage.retrieve("username"),
-    token: this.localStorage.retrieve("refreshToken")
-  }
+    refreshTokenRequest = {
+        username: this.localStorage.retrieve("username"),
+        token: this.localStorage.retrieve("refreshToken")
+    }
 
-  constructor(private http: HttpClient, private localStorage: LocalStorageService) { }
+    constructor(private http: HttpClient, private localStorage: LocalStorageService) { }
 
-  signUp(signUpRequest: SignUpRequest): Observable<Object> {
-    return this.http.post(`${this.url}/signup`, signUpRequest, {responseType: "text"});
-  }
-  // test
-  login(loginRequest: LoginRequest) {
-    return this.http.post<AuthenticationResponse>(`${this.url}/login`, loginRequest).pipe(map(data => {
-      this.localStorage.store("jwtToken", data.jwtToken);
-      this.localStorage.store("username", data.username);
-      this.localStorage.store("imageUri", data.username);
-      this.localStorage.store("refreshToken", data.refreshToken);
-      this.localStorage.store("expiration", data.expiration);
-      this.loggedIn.emit(true);
-      this.userName.emit(data.username);
-    }));
-  }
-  // test
-  logout() {
-    this.http.post(`${this.url}/logout`, this.refreshTokenRequest);
-    this.localStorageClearAll();
-  }
+    signUp(signUpRequest: SignUpRequest): Observable<Object> {
+        return this.http.post(`${this.url}/signup`, signUpRequest, { responseType: "text" });
+    }
 
-  getJwt() {
-    return this.localStorage.retrieve("jwtToken");
-  }
+    login(loginRequest: LoginRequest) {
+        return this.http.post<AuthenticationResponse>(`${this.url}/login`, loginRequest).pipe(map(data => {
+            this.localStorage.store("jwtToken", data.jwtToken);
+            this.localStorage.store("username", data.username);
+            this.localStorage.store("refreshToken", data.refreshToken);
+            this.localStorage.store("expiration", data.expiration);
+            this.loggedIn.emit(true);
+            this.userName.emit(data.username);
+        }));
+    }
 
-  getUserName() {
-    return this.localStorage.retrieve("username");
-  }
+    logout() {
+        this.http.post(`${this.url}/logout`, this.refreshTokenRequest);
+        this.localStorageClearAll();
+    }
 
-  getImageUri() {
-    return this.localStorage.retrieve("imageUri");
-  }
+    getJwt() {
+        return this.localStorage.retrieve("jwtToken");
+    }
 
-  refreshToken() {
-    return this.http.post<AuthenticationResponse>(`${this.url}/refresh/token`, this.refreshTokenRequest).pipe(
-      tap((token) => {
-        this.localStorage.clear("jwtToken");
-        this.localStorage.clear("expiration");
-        this.localStorage.store("jwtToken", token.jwtToken);
-        this.localStorage.store("expiration", token.expiration);
-      })
-    )
-  }
+    getUserName() {
+        return this.localStorage.retrieve("username");
+    }
 
-  localStorageClearAll() {
-    this.localStorage.clear('jwtToken');
-    this.localStorage.clear('username');
-    this.localStorage.clear('imageUri');
-    this.localStorage.clear('refreshToken');
-    this.localStorage.clear('expiration');
-  }
+    refreshToken() {
+        return this.http.post<AuthenticationResponse>(`${this.url}/refresh/token`, this.refreshTokenRequest).pipe(
+            tap((token) => {
+                this.localStorage.clear("jwtToken");
+                this.localStorage.clear("expiration");
+                this.localStorage.store("jwtToken", token.jwtToken);
+                this.localStorage.store("expiration", token.expiration);
+            })
+        )
+    }
 
-  isLoggedIn() {
-    return !!this.getJwt();
-  }
+    localStorageClearAll() {
+        this.localStorage.clear('jwtToken');
+        this.localStorage.clear('username');
+        this.localStorage.clear('refreshToken');
+        this.localStorage.clear('expiration');
+    }
+
+    isLoggedIn() {
+        return !!this.getJwt();
+    }
 
 }

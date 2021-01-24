@@ -4,10 +4,7 @@
             <div class="ui-block">
                 <article class="profile">
                     <div class="user inline-items">
-
-                        <!-- https://i.imgur.com/TRdKQjq.jpeg -->
-                        <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author"> -->
-
+                        <!-- image -->
                         <div *ngIf="user.imageUri">
                             <div class="image-upload">
                                 <label for="file-input">
@@ -16,7 +13,6 @@
                                 <input id="file-input" type="file" (change)="onSelectFile($event)">
                             </div>
                         </div>
-
                         <div *ngIf="!user.imageUri">
                             <div class="image-upload">
                                 <label for="file-input">
@@ -25,19 +21,19 @@
                                 <input id="file-input" type="file" (change)="onSelectFile($event)">
                             </div>
                         </div>
-
+                        <!-- username -->
                         <a class="h2 user">{{user.username}}</a>
                     </div>
+                    <!-- other info -->
                     <p>Email address: {{user.email}}</p>
                     <hr>
-                    <p>aN uiodaiusdn iasdni uands aoisd adnui andn aisdn iuansd ias ads ioasmdim iasodmo asmdoa mdsoi amdo</p>
+                    <p>You can change the profile picture by clicking on the current profile picture and selecting the file you want</p>
                     <br>
                     <p>Questions: 3</p>
                     <br>
                     <p>Answers: 4</p>
                     <br>
                     <p>Topics: 2</p>
-
                 </article>
             </div>
         </div>
