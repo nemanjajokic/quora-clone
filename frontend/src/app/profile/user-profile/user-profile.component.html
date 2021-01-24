@@ -8,25 +8,27 @@
                         <!-- https://i.imgur.com/TRdKQjq.jpeg -->
                         <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author"> -->
 
-                        <div class="image-upload">
-                            <label for="file-input">
-
-                                <!-- User profile image if exists -->
-                                <div *ngIf="userResponse.imageUri">
-                                    <img src={{userResponse.imageUri}} alt="author">
-                                </div>
-                                <!-- Default profile image -->
-                                <div *ngIf="!userResponse.imageUri">
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
-                                </div>
-                                
-                            </label>
-                            <input id="file-input" type="file" (change)="onSelectFile($event)">
+                        <div *ngIf="user.imageUri">
+                            <div class="image-upload">
+                                <label for="file-input">
+                                    <img src={{user.imageUri}} alt="author">
+                                </label>
+                                <input id="file-input" type="file" (change)="onSelectFile($event)">
+                            </div>
                         </div>
 
-                        <a class="h2 user">{{userResponse.username}}</a>
+                        <div *ngIf="!user.imageUri">
+                            <div class="image-upload">
+                                <label for="file-input">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
+                                </label>
+                                <input id="file-input" type="file" (change)="onSelectFile($event)">
+                            </div>
+                        </div>
+
+                        <a class="h2 user">{{user.username}}</a>
                     </div>
-                    <p>Email address: {{userResponse.email}}</p>
+                    <p>Email address: {{user.email}}</p>
                     <hr>
                     <p>aN uiodaiusdn iasdni uands aoisd adnui andn aisdn iuansd ias ads ioasmdim iasodmo asmdoa mdsoi amdo</p>
                     <br>

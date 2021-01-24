@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ImageService } from '../image.service';
+import { ProfileService } from '../profile.service';
 import { UserView } from '../user-view';
-import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -13,20 +11,18 @@ import { UserService } from '../user.service';
 })
 export class UserProfileComponent implements OnInit {
 
+  constructor(private service: ImageService, private profileService: ProfileService, private authService: AuthService) { }
+
   username: string;
-  userResponse: UserView = {} as UserView;
-
-  constructor(private service: ImageService, private userService: UserService, private authService: AuthService) { }
-
   public formData = new FormData();
   public selectedFile: File = null;
 
+  user: UserView = <UserView>{};
+
   ngOnInit(): void {
+    this.authService.userName.subscribe((data: string) => this.username = data);
     this.username = this.authService.getUserName();
-  //  this.username = this.route.snapshot.params["username"];
-    this.userService.getUserInfo(this.username).subscribe(data => {
-      this.userResponse = data;
-    });
+    this.profileService.getUserInfo(this.username).subscribe(data => this.user = data);
   }
 
   onSelectFile(event) {
@@ -35,14 +31,21 @@ export class UserProfileComponent implements OnInit {
     this.formData.set("file", this.selectedFile, this.selectedFile.name);
     this.service.uploadImage(this.formData).subscribe(res => {
       console.log(res);
+      this.profileService.updateUserInfo(this.username);
+      this.refresh();
+    });
+  }
+
+  refresh() {
+    this.profileService.getUserInfo(this.username).subscribe(data => {
+      this.user = data;
+      console.log(data.imageUri);
     });
   }
 
   performUpload() {
     this.formData.set("file", this.selectedFile, this.selectedFile.name);
-    this.service.uploadImage(this.formData).subscribe(res => {
-      console.log(res);
-    });
+    this.service.uploadImage(this.formData).subscribe(() => this.refresh());
   }
 
 }

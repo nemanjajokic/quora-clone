@@ -12,18 +12,20 @@
         -->
         <!-- profile -->
         <div *ngIf="isLoggedIn">
-            <div ngbDropdown>
-                <!-- User profile image if exists -->
-                <div *ngIf="imageUri">
-                    <img class="profile" src={{imageUri}} id="dropdownConfig" ngbDropdownToggle>
+            <div *ngIf="userView.imageUri">
+                <div ngbDropdown>
+                    <img class="profile" src={{userView.imageUri}} 
+                        id="dropdownConfig" ngbDropdownToggle>
                     <div ngbDropdownMenu aria-labelledby="dropdownConfig">
                         <button ngbDropdownItem routerLink="/user-profile">Profile</button>
                         <button ngbDropdownItem (click)="logout()">Logout</button>
                     </div>
                 </div>
-                <!-- Default profile image -->
-                <div *ngIf="!imageUri">
-                    <img class="profile" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" id="dropdownConfig" ngbDropdownToggle>
+            </div>
+            <div *ngIf="!userView.imageUri">
+                <div ngbDropdown>
+                    <img class="profile" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" 
+                        id="dropdownConfig" ngbDropdownToggle>
                     <div ngbDropdownMenu aria-labelledby="dropdownConfig">
                         <button ngbDropdownItem routerLink="/user-profile">Profile</button>
                         <button ngbDropdownItem (click)="logout()">Logout</button>

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserView } from 'src/app/profile/user-view';
-import { UserService } from 'src/app/profile/user.service';
+import { ProfileService } from 'src/app/profile/profile.service';
 import { AuthService } from '../auth.service';
 import { LoginRequest } from './login-request';
 import { SignUpRequest } from './sign-up-request';
@@ -20,7 +19,7 @@ export class SignInComponent implements OnInit {
   loginForm: FormGroup;
   userResponse: UserView;
 
-  constructor(private authService: AuthService, private userService: UserService, private router: Router) {
+  constructor(private service: AuthService, private profileService: ProfileService, private router: Router) {
     this.signUpRequest = {
       username: "",
       password: "",
@@ -69,6 +68,10 @@ export class SignInComponent implements OnInit {
 
     this.authService.login(this.loginRequest).subscribe((data) => {
       console.log(data);
+
+      this.profileService.updateUserInfo(this.loginRequest.username);
+      this.profileService.metoda();
+      
       this.redirectToHome();
 /*
       this.userService.getUserInfo(this.loginRequest.username).subscribe((res) => {

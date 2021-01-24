@@ -13,8 +13,7 @@ import { map, tap } from 'rxjs/operators';
 export class AuthService {
 
   @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
-  @Output() username: EventEmitter<string> = new EventEmitter();
-  @Output() imageUri: EventEmitter<string> = new EventEmitter();
+  @Output() userName: EventEmitter<string> = new EventEmitter();
   private url = "http://localhost:8080/api/auth";
 
   refreshTokenRequest = {
@@ -36,8 +35,7 @@ export class AuthService {
       this.localStorage.store("refreshToken", data.refreshToken);
       this.localStorage.store("expiration", data.expiration);
       this.loggedIn.emit(true);
-      this.username.emit(data.username);
-      this.imageUri.emit(data.imageUri);
+      this.userName.emit(data.username);
     }));
   }
   // test
