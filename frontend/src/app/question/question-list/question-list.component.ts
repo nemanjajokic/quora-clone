@@ -1,53 +1,68 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AnswerRequest } from 'src/app/answer/answer-request';
-import { AnswerResponse } from 'src/app/answer/answer-response';
 import { AnswerService } from 'src/app/answer/answer.service';
+import { AuthService } from 'src/app/auth/auth.service';
+import { ProfileService } from 'src/app/profile/profile.service';
+import { UserView } from 'src/app/profile/user-view';
 import { Question } from '../question';
 import { QuestionService } from '../question.service';
 
 @Component({
-  selector: 'app-question-list',
-  templateUrl: './question-list.component.html',
-  styleUrls: ['./question-list.component.css']
+    selector: 'app-question-list',
+    templateUrl: './question-list.component.html',
+    styleUrls: ['./question-list.component.css']
 })
 export class QuestionListComponent implements OnInit {
 
-  questions: Array<Question> = [];
-  isCollapsed: boolean[] = [];
-  questionId: number = 0;
+    questions: Array<Question> = [];
+    isCollapsed: boolean[] = [];
+    questionId: number = 0;
 
-  answerForm: FormGroup;
-  answerRequest: AnswerRequest;
+    username: string;
+    userView: any;
 
-  constructor(private questionService: QuestionService, private answerService: AnswerService) {
-    this.questionService.getAll().subscribe(data => {
-      this.questions = data;
-    });
-    this.answerRequest = {
-      body: "",
-      questionId: this.questionId
+    answerForm: FormGroup;
+    answerRequest: AnswerRequest;
+
+    constructor(private questionService: QuestionService, private answerService: AnswerService, 
+        private authService: AuthService, private profileService: ProfileService) {
+
+        this.questionService.getAll().subscribe(data => {
+            this.questions = data;
+        });
+        this.answerRequest = {
+            body: "",
+            questionId: this.questionId
+        }
     }
-  }
 
-  ngOnInit(): void {
-    this.answerForm = new FormGroup({
-      body: new FormControl("", Validators.required)
-    });
-  }
+    ngOnInit(): void {
+        this.answerForm = new FormGroup({
+            body: new FormControl("", Validators.required)
+        });
+        this.authService.userName.subscribe((data: string) => this.username = data);
+        this.username = this.authService.getUserName();
 
-  refresh() {
-    this.questionService.getAll().subscribe(data => {
-      this.questions = data;
-    });
-  }
+        this.profileService.userView.subscribe((data: UserView) => this.userView = data);
+        this.profileService.getUserInfo(this.username).subscribe(data => {
+            this.userView = data;
+            console.log(data);
+        });
+    }
 
-  saveAnswer() {
-    this.answerRequest.body = this.answerForm.get("body").value;
-    this.answerRequest.questionId = this.questionId;
+    refresh() {
+        this.questionService.getAll().subscribe(data => {
+            this.questions = data;
+        });
+    }
 
-    this.answerService.save(this.answerRequest).subscribe(() => this.refresh());
-    this.answerForm.reset();
-  }
+    saveAnswer() {
+        this.answerRequest.body = this.answerForm.get("body").value;
+        this.answerRequest.questionId = this.questionId;
+
+        this.answerService.save(this.answerRequest).subscribe(() => this.refresh());
+        this.answerForm.reset();
+    }
 
 }

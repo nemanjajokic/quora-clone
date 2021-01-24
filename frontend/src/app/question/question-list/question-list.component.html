@@ -46,8 +46,13 @@
                     <hr>
                     <div class="answer-input">
                         <div class="post__author author inline-items">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
-                            
+                            <div *ngIf="userView.imageUri">
+                                <img src={{userView.imageUri}} alt="author">
+                            </div>
+                            <!-- Default profile image -->
+                            <div *ngIf="!userView.imageUri">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
+                            </div>
                             <form [formGroup]="answerForm" (ngSubmit)="saveAnswer()" class="inline-items">
                                 <div class="text-area">
                                     <textarea class="form-control text" [formControlName]="'body'" required rows="1" cols="50" placeholder="Write your answer here..." oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea> 
@@ -89,26 +94,3 @@
         <!-- question info end -->
     </div>
 </div>
-
-<!-- 
-     !-- answer list --
-     <div class="answers">
-        <div *ngFor="let answer of answers">
-            <hr>
-            <div class="post__author author inline-items">
-                !-- https://i.imgur.com/TRdKQjq.jpeg --
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
-                <div class="author-date">
-                    <a class="h6 user">{{answer.userName}}</a>
-                    <div class="date">
-                        <time class="published">
-                            {{answer.duration}}
-                        </time>
-                    </div>
-                </div>
-            </div>
-            <p>{{answer.body}}</p>
-        </div>
-    </div>
-    !-- answer-list end --
- -->

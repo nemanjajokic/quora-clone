@@ -14,6 +14,7 @@ import java.time.Instant;
 public class AuthenticationResponse {
     private String jwtToken;
     private String username;
+    private String imageUri;
     private String refreshToken;
     private Instant expiration;
 }

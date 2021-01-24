@@ -1,6 +1,5 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
-
         <!-- topics -->
         <div class="col-lg-2">
             <div class=" aff-right">
@@ -32,7 +31,6 @@
                                 </a>
                             </div>
                             <div class="post__author author inline-items">
-                                <!-- https://i.imgur.com/TRdKQjq.jpeg -->
                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
                                 <div class="author-date">
                                     <a class="h6 user">{{question.userName}}</a>
@@ -79,7 +77,6 @@
                                     <div *ngFor="let answer of question.answers">
                                         <hr>
                                         <div class="post__author author inline-items">
-                                            <!-- https://i.imgur.com/TRdKQjq.jpeg -->
                                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
                                             <div class="author-date">
                                                 <a class="h6 user">{{answer.userName}}</a>
@@ -101,6 +98,8 @@
                 </div>
             </div>
         </div>
+        <!-- end of questions -->
+
         <!-- improve your feed -->
         <div class="col-lg-3">
             <div class=" q-wid">

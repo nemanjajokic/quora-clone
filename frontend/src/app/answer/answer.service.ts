@@ -9,16 +9,16 @@ import { AnswerResponse } from './answer-response';
 })
 export class AnswerService {
 
-  private url = "http://localhost:8080/api/answer";
+    private url = "http://localhost:8080/api/answer";
 
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
-  getAllAnswersForQuestion(id: number): Observable<Array<AnswerResponse>> {
-    return this.http.get<Array<AnswerResponse>>(`${this.url}/${id}`);
-  }
+    getAllAnswersForQuestion(id: number): Observable<Array<AnswerResponse>> {
+        return this.http.get<Array<AnswerResponse>>(`${this.url}/${id}`);
+    }
 
-  save(answerRequest: AnswerRequest) {
-    return this.http.post("http://localhost:8080/api/answer", answerRequest);
-  }
+    save(answerRequest: AnswerRequest) {
+        return this.http.post(this.url, answerRequest);
+    }
 
 }

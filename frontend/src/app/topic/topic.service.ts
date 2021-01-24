@@ -4,18 +4,20 @@ import { Observable } from 'rxjs';
 import { Topic } from './topic';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class TopicService {
 
-  constructor(private http: HttpClient) { }
+    private url = "http://localhost:8080/api/topic";
 
-  getAllTopics(): Observable<Array<Topic>> {
-    return this.http.get<Array<Topic>>("http://localhost:8080/api/topic");
-  }
+    constructor(private http: HttpClient) { }
 
-  saveTopic(topic: Topic) {
-    return this.http.post("http://localhost:8080/api/topic", topic);
-  }
+    getAllTopics(): Observable<Array<Topic>> {
+        return this.http.get<Array<Topic>>(this.url);
+    }
+
+    saveTopic(topic: Topic) {
+        return this.http.post(this.url, topic);
+    }
 
 }
