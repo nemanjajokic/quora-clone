@@ -8,16 +8,27 @@
                         <!-- https://i.imgur.com/TRdKQjq.jpeg -->
                         <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author"> -->
 
-                        <div class="image-upload">
-                            <label for="file-input">
-                                <img src="http://localhost:8080/api/images/getImage/1_RDlVi7uvQyBOKmiwN-G0FA.png" alt="author">
-                            </label>
-                            <input id="file-input" type="file" (change)="onSelectFile($event)">
+                        <div *ngIf="user.imageUri">
+                            <div class="image-upload">
+                                <label for="file-input">
+                                    <img src={{user.imageUri}} alt="author">
+                                </label>
+                                <input id="file-input" type="file" (change)="onSelectFile($event)">
+                            </div>
                         </div>
 
-                        <a class="h2 user">Mika123</a>
+                        <div *ngIf="!user.imageUri">
+                            <div class="image-upload">
+                                <label for="file-input">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
+                                </label>
+                                <input id="file-input" type="file" (change)="onSelectFile($event)">
+                            </div>
+                        </div>
+
+                        <a class="h2 user">{{user.username}}</a>
                     </div>
-                    <p>Email address: ceca123@neca.com</p>
+                    <p>Email address: {{user.email}}</p>
                     <hr>
                     <p>aN uiodaiusdn iasdni uands aoisd adnui andn aisdn iuansd ias ads ioasmdim iasodmo asmdoa mdsoi amdo</p>
                     <br>
