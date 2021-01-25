@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface AnswerRepository extends JpaRepository<Answer, Integer> {
     List<Answer> findAllByQuestion(Question question);
+    int countByQuestion(Question question);
 }

@@ -14,6 +14,7 @@ import io.neca.quoraclone.mapper.QuestionMapper;
 import io.neca.quoraclone.model.Question;
 import io.neca.quoraclone.model.Topic;
 import io.neca.quoraclone.model.User;
+import io.neca.quoraclone.utils.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +41,8 @@ public class QuestionService {
     private AnswerRepository answerRepository;
     @Autowired
     private AnswerMapper answerMapper;
+    @Autowired
+    private TimeUtil timeUtil;  // remove after refactoring
 
     public void save(QuestionRequest request) {
         Topic topic = topicRepository.findByName(request.getTopicName());
@@ -80,8 +83,9 @@ public class QuestionService {
             response.setTopicName(q.getTopic().getName());
             response.setUserName(q.getUser().getUsername());
             response.setImageUri(Optional.ofNullable(q.getUser().getImageUri()).orElse(null));  // If exists
-            response.setDuration(q.getCreated().toString());
+            response.setDuration(timeUtil.toDuration(q.getCreated()));
             response.setAnswers(answerResponses);
+            response.setAnswerCount(answerRepository.countByQuestion(q));
 
             return response;
         }).collect(Collectors.toList());
@@ -99,8 +103,9 @@ public class QuestionService {
             response.setTopicName(q.getTopic().getName());
             response.setUserName(q.getUser().getUsername());
             response.setImageUri(Optional.ofNullable(q.getUser().getImageUri()).orElse(null));  // If exists
-            response.setDuration(q.getCreated().toString());
+            response.setDuration(timeUtil.toDuration(q.getCreated()));
             response.setAnswers(answerResponses);
+            response.setAnswerCount(answerRepository.countByQuestion(q));
 
             return response;
         }).collect(Collectors.toList());

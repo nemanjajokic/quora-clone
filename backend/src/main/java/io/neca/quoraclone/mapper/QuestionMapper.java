@@ -1,5 +1,6 @@
 package io.neca.quoraclone.mapper;
 
+import io.neca.quoraclone.dao.AnswerRepository;
 import io.neca.quoraclone.dto.QuestionRequest;
 
 import io.neca.quoraclone.dto.QuestionResponse;
@@ -18,6 +19,8 @@ public class QuestionMapper {
 
     @Autowired
     private TimeUtil timeUtil;
+    @Autowired
+    private AnswerRepository answerRepository;
 
     // Topic and user objects required for relations
     public Question toEntity(QuestionRequest request, Topic topic, User user) {
@@ -41,6 +44,7 @@ public class QuestionMapper {
                 .imageUri(Optional.ofNullable(question.getUser().getImageUri()).orElse(null))   // If exists
                 // duration
                 .duration(timeUtil.toDuration(question.getCreated()))
+                .answerCount(answerRepository.countByQuestion(question))
                 .build();
     }
 

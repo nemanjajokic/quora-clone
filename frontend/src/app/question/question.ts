@@ -9,4 +9,5 @@ export class Question {
     imageUri: string;
     duration: string;
     answers: Array<AnswerResponse>;
+    answerCount: number;
 }
