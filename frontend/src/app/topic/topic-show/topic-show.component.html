@@ -8,9 +8,9 @@
                     <h6 class="my-4">About Topic</h6>
                     <hr>
                     <div class="nav flex-column nav-pills nav-stacked" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link">games</a>
+                        <a class="nav-link">{{topicName}}</a>
                         <br>
-                        <a class="nav-link">This is topic about games I do not know waht to saz more about that.</a>
+                        <a class="nav-link">{{topicDescription}}</a>
                     </div>
 
                 </div>
@@ -31,7 +31,14 @@
                                 </a>
                             </div>
                             <div class="post__author author inline-items">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
+                                <!-- User profile image if exists -->
+                                <div *ngIf="question.imageUri">
+                                    <img src={{question.imageUri}} alt="author">
+                                </div>
+                                <!-- Default profile image -->
+                                <div *ngIf="!question.imageUri">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
+                                </div>
                                 <div class="author-date">
                                     <a class="h6 user">{{question.userName}}</a>
                                     <div class="date">
@@ -58,18 +65,24 @@
                             <!-- answer -->
                             <div *ngIf="isCollapsed[i]">
                                 <!-- answer input -->
-                                <hr>
-                                <div class="answer-input">
-                                    <div class="post__author author inline-items">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
-                                        
-                                        <form [formGroup]="answerForm" (ngSubmit)="saveAnswer()" class="inline-items">
-                                            <div class="text-area">
-                                                <textarea class="form-control text" [formControlName]="'body'" required rows="1" cols="50" placeholder="Write your answer here..." oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea> 
+                                <div *ngIf="isLoggedIn">
+                                    <hr>
+                                    <div class="answer-input">
+                                        <div class="post__author author inline-items">
+                                            <div *ngIf="userView.imageUri">
+                                                <img src={{userView.imageUri}} alt="author">
                                             </div>
-                                            <button class="btn btn-primary" type="submit">Add Comment</button>
-                                        </form>
-            
+                                            <!-- Default profile image -->
+                                            <div *ngIf="!userView.imageUri">
+                                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
+                                            </div>
+                                            <form [formGroup]="answerForm" (ngSubmit)="saveAnswer()" class="inline-items">
+                                                <div class="text-area">
+                                                    <textarea class="form-control text" [formControlName]="'body'" required rows="1" cols="50" placeholder="Write your answer here..." oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea> 
+                                                </div>
+                                                <button class="btn btn-primary" type="submit">Add Comment</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- answer list -->
@@ -77,7 +90,14 @@
                                     <div *ngFor="let answer of question.answers">
                                         <hr>
                                         <div class="post__author author inline-items">
-                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
+                                            <!-- User profile image if exists -->
+                                            <div *ngIf="answer.imageUri">
+                                                <img src={{answer.imageUri}} alt="author">
+                                            </div>
+                                            <!-- Default profile image -->
+                                            <div *ngIf="!answer.imageUri">
+                                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
+                                            </div>
                                             <div class="author-date">
                                                 <a class="h6 user">{{answer.userName}}</a>
                                                 <div class="date">

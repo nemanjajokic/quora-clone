@@ -20,6 +20,7 @@ export class QuestionListComponent implements OnInit {
     questionId: number = 0;
 
     username: string;
+    isLoggedIn: boolean;
     userView: any;
 
     answerForm: FormGroup;
@@ -41,7 +42,9 @@ export class QuestionListComponent implements OnInit {
         this.answerForm = new FormGroup({
             body: new FormControl("", Validators.required)
         });
+        this.authService.loggedIn.subscribe((data: boolean) => this.isLoggedIn = data);
         this.authService.userName.subscribe((data: string) => this.username = data);
+        this.isLoggedIn = this.authService.isLoggedIn();
         this.username = this.authService.getUserName();
 
         this.profileService.userView.subscribe((data: UserView) => this.userView = data);

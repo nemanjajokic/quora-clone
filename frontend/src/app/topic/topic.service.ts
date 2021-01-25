@@ -16,6 +16,10 @@ export class TopicService {
         return this.http.get<Array<Topic>>(this.url);
     }
 
+    getTopic(id: number): Observable<Topic> {
+        return this.http.get<Topic>(this.url + "/" + id);
+    }
+
     saveTopic(topic: Topic) {
         return this.http.post(this.url, topic);
     }

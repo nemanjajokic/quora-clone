@@ -43,23 +43,24 @@
                 <!-- answer -->
                 <div *ngIf="isCollapsed[i]">
                     <!-- answer input -->
-                    <hr>
-                    <div class="answer-input">
-                        <div class="post__author author inline-items">
-                            <div *ngIf="userView.imageUri">
-                                <img src={{userView.imageUri}} alt="author">
-                            </div>
-                            <!-- Default profile image -->
-                            <div *ngIf="!userView.imageUri">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
-                            </div>
-                            <form [formGroup]="answerForm" (ngSubmit)="saveAnswer()" class="inline-items">
-                                <div class="text-area">
-                                    <textarea class="form-control text" [formControlName]="'body'" required rows="1" cols="50" placeholder="Write your answer here..." oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea> 
+                    <div *ngIf="isLoggedIn">
+                        <hr>
+                        <div class="answer-input">
+                            <div class="post__author author inline-items">
+                                <div *ngIf="userView.imageUri">
+                                    <img src={{userView.imageUri}} alt="author">
                                 </div>
-                                <button class="btn btn-primary" type="submit">Add Comment</button>
-                            </form>
-
+                                <!-- Default profile image -->
+                                <div *ngIf="!userView.imageUri">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRionTtxUfdanGm9HhxO8Y81zfBuKeAiaDwrw&usqp=CAU" alt="author">
+                                </div>
+                                <form [formGroup]="answerForm" (ngSubmit)="saveAnswer()" class="inline-items">
+                                    <div class="text-area">
+                                        <textarea class="form-control text" [formControlName]="'body'" required rows="1" cols="50" placeholder="Write your answer here..." oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea> 
+                                    </div>
+                                    <button class="btn btn-primary" type="submit">Add Comment</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                     <!-- answer list -->

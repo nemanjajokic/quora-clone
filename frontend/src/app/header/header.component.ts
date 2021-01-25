@@ -15,6 +15,8 @@ export class HeaderComponent implements OnInit {
     username: string;
     userView: any;
 
+    get imageUri() { return (this.userView && this.userView.imageUri) ? this.userView.imageUri : null }
+
     constructor(private authService: AuthService, private profileService: ProfileService, private router: Router) { }
 
     ngOnInit(): void {
@@ -32,7 +34,6 @@ export class HeaderComponent implements OnInit {
 
     logout() {
         this.authService.logout();
-        this.isLoggedIn = false;
         this.router.navigateByUrl("");
     }
 

@@ -82,7 +82,6 @@ public class AuthService {
         return AuthenticationResponse.builder()
                 .jwtToken(token)
                 .username(loginRequest.getUsername())
-                .imageUri(Optional.ofNullable(userRepository.findByUsername(loginRequest.getUsername()).getImageUri()).orElse(null))
                 .refreshToken(refreshTokenUtil.generateToken().getToken())
                 .expiration(Instant.now().plusSeconds(jwtUtil.getJwtExpiration()))
                 .build();

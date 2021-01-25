@@ -41,6 +41,7 @@ export class AuthService {
     logout() {
         this.http.post(`${this.url}/logout`, this.refreshTokenRequest);
         this.localStorageClearAll();
+        this.loggedIn.emit(false);
     }
 
     getJwt() {
