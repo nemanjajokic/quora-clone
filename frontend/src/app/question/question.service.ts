@@ -20,12 +20,8 @@ export class QuestionService {
         return this.http.post(this.url, questionRequest);
     }
 
-    getAll(): Observable<Array<Question>> {
-        return this.http.get<Array<Question>>(this.url + "/all");
-    }
-
     getAllByTopic(id: number): Observable<Array<Question>> {
-        return this.http.get<Array<Question>>(this.url + "/all/" + id);
+        return this.http.get<Array<Question>>(this.url + "/topic/" + id);
     }
 
 }

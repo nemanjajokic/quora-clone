@@ -29,13 +29,18 @@ export class QuestionListComponent implements OnInit {
     constructor(private questionService: QuestionService, private answerService: AnswerService, 
         private authService: AuthService, private profileService: ProfileService) {
 
-        this.questionService.getAll().subscribe(data => {
-            this.questions = data;
-        });
         this.answerRequest = {
             body: "",
             questionId: this.questionId
         }
+        this.questionService.getAllQuestions().subscribe(results => {
+            for(let q of results) {
+                this.answerService.getAllAnswersForQuestion(q.id).subscribe(answers => {
+                    q.answers = answers;
+                });
+                this.questions.push(q);
+            }
+        });
     }
 
     ngOnInit(): void {
@@ -55,8 +60,14 @@ export class QuestionListComponent implements OnInit {
     }
 
     refresh() {
-        this.questionService.getAll().subscribe(data => {
-            this.questions = data;
+        this.questionService.getAllQuestions().subscribe(results => {
+            this.questions = [];
+            for(let q of results) {
+                this.answerService.getAllAnswersForQuestion(q.id).subscribe(answers => {
+                    q.answers = answers;
+                });
+                this.questions.push(q);
+            }
         });
     }
 

@@ -46,8 +46,13 @@ export class TopicShowComponent implements OnInit {
         this.topicService.getTopic(this.topicId).subscribe(data => {
             this.topic = data;
         });
-        this.questionService.getAllByTopic(this.topicId).subscribe(data => {
-            this.questions = data;
+        this.questionService.getAllByTopic(this.topicId).subscribe(results => {
+            for(let q of results) {
+                this.answerService.getAllAnswersForQuestion(q.id).subscribe(answers => {
+                    q.answers = answers;
+                });
+                this.questions.push(q);
+            }
         });
     }
 
@@ -68,8 +73,14 @@ export class TopicShowComponent implements OnInit {
     }
 
     refresh() {
-        this.questionService.getAllByTopic(this.topicId).subscribe(data => {
-            this.questions = data;
+        this.questionService.getAllByTopic(this.topicId).subscribe(results => {
+            this.questions = [];
+            for(let q of results) {
+                this.answerService.getAllAnswersForQuestion(q.id).subscribe(answers => {
+                    q.answers = answers;
+                });
+                this.questions.push(q);
+            }
         });
     }
 
