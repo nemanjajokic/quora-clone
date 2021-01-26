@@ -1,6 +1,5 @@
 package io.neca.quoraclone.controller;
 
-import io.neca.quoraclone.dto.QuestionAnswerResponse;
 import io.neca.quoraclone.dto.QuestionRequest;
 import io.neca.quoraclone.dto.QuestionResponse;
 import io.neca.quoraclone.service.QuestionService;
@@ -38,18 +37,6 @@ public class QuestionController {
     @GetMapping("/topic/{id}")
     public List<QuestionResponse> getAllForTopic(@PathVariable int id) {
         return service.getAllQuestionsForTopic(id);
-    }
-
-    // Additional endpoints to more easily display the content in the angular
-
-    @GetMapping("/all")
-    public List<QuestionAnswerResponse> getQuestionsWithAnswers() {
-        return service.getAll();
-    }
-
-    @GetMapping("/all/{id}")
-    public List<QuestionAnswerResponse> getQuestionsWithAnswersByTopic(@PathVariable int id) {
-        return service.getAllForTopic(id);
     }
     
 }
