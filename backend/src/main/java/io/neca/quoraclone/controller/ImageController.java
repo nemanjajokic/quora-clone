@@ -16,7 +16,7 @@ public class ImageController {
     private ImageService service;
 
     @PostMapping(value = "upload")
-    public void uploadImage(@RequestParam MultipartFile file) throws IOException {
+    public void uploadImage(@RequestParam MultipartFile file) throws Exception {
         service.uploadToFileSystem(file);
     }
 
