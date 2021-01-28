@@ -23,20 +23,17 @@ export class TopicShowComponent implements OnInit {
     topicId: number = 0;
     questionId: number = 0;
     topic: Topic;
+    username: string;
+    isLoggedIn: boolean;
+    userView: any;
+    answerForm: FormGroup;
+    answerRequest: AnswerRequest;
     
     get topicName() { return (this.topic && this.topic.name) ? this.topic.name : null }
     get topicDescription() { return (this.topic && this.topic.description) ? this.topic.description : null }
 
-    username: string;
-    isLoggedIn: boolean;
-    userView: any;
-
-    answerForm: FormGroup;
-    answerRequest: AnswerRequest;
-
     constructor(private questionService: QuestionService, private topicService: TopicService, private answerService: AnswerService, 
         private authService: AuthService, private profileService: ProfileService, private route: ActivatedRoute) {
-
         this.answerRequest = {
             body: "",
             questionId: this.questionId
@@ -46,13 +43,8 @@ export class TopicShowComponent implements OnInit {
         this.topicService.getTopic(this.topicId).subscribe(data => {
             this.topic = data;
         });
-        this.questionService.getAllByTopic(this.topicId).subscribe(results => {
-            for(let q of results) {
-                this.answerService.getAllAnswersForQuestion(q.id).subscribe(answers => {
-                    q.answers = answers;
-                });
-                this.questions.push(q);
-            }
+        this.questionService.getAllByTopic(this.topicId).subscribe(questions => {
+            this.questions = questions;
         });
     }
 
@@ -72,23 +64,24 @@ export class TopicShowComponent implements OnInit {
         });
     }
 
-    refresh() {
-        this.questionService.getAllByTopic(this.topicId).subscribe(results => {
-            this.questions = [];
-            for(let q of results) {
-                this.answerService.getAllAnswersForQuestion(q.id).subscribe(answers => {
-                    q.answers = answers;
-                });
-                this.questions.push(q);
-            }
+    getAnswers() {
+        this.answerService.getAllAnswersForQuestion(this.questionId).subscribe(answers => {
+            let index = this.questions.findIndex(q => q.id===this.questionId);
+            this.questions[index].answers = answers;
         });
     }
 
-    saveAnswer() {
-        this.answerRequest.body = this.answerForm.get("body").value;
-        this.answerRequest.questionId = this.questionId;
+    refreshAnswers(id: number) {
+        this.answerService.getAllAnswersForQuestion(id).subscribe(answers => {
+            let index = this.questions.findIndex(q => q.id===id);
+            this.questions[index].answers = answers;
+        });
+    }
 
-        this.answerService.save(this.answerRequest).subscribe(() => this.refresh());
+    saveAnswer(id: number) {
+        this.answerRequest.body = this.answerForm.get("body").value;
+        this.answerRequest.questionId = id;
+        this.answerService.save(this.answerRequest).subscribe(() => this.refreshAnswers(id));
         this.answerForm.reset();
     }
 
