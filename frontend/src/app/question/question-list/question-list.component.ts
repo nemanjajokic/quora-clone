@@ -69,6 +69,8 @@ export class QuestionListComponent implements OnInit {
         this.answerRequest.body = this.answerForm.get("body").value;
         this.answerRequest.questionId = id;
         this.answerService.save(this.answerRequest).subscribe(() => this.refreshAnswers(id));
+        let index = this.questions.findIndex(q => q.id===id);
+        this.questions[index].answerCount++;
         this.answerForm.reset();
     }
 

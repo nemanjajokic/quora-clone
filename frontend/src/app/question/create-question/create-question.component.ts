@@ -30,7 +30,8 @@ export class CreateQuestionComponent implements OnInit {
         }
         this.topic = {
             name: "",
-            description: ""
+            description: "",
+            questionCount: 0
         }
     }
 
@@ -75,7 +76,7 @@ export class CreateQuestionComponent implements OnInit {
         this.topic.name = this.topicForm.get("createTopicName").value;
         this.topic.description = this.topicForm.get("createTopicDescription").value;
 
-        this.service.saveTopic(this.topic).subscribe((res) => {
+        this.service.saveTopic(this.topic).subscribe(() => {
             this.topicService.getAllTopics().subscribe((data) => {
                 this.topics = data;
             });

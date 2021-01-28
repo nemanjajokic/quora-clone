@@ -13,4 +13,5 @@ public class TopicDto {
     private int id;
     private String name;
     private String description;
+    private int questionCount;
 }

@@ -5,7 +5,6 @@ import io.neca.quoraclone.model.User;
 import io.neca.quoraclone.utils.ImageUtil;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 public class ImageService {
@@ -37,16 +37,17 @@ public class ImageService {
 
     public void uploadToFileSystem(MultipartFile image) throws Exception {
         // Image name
-        String imageName = StringUtils.cleanPath(Objects.requireNonNull(image.getOriginalFilename()));
+        String imageName = UUID.randomUUID() + "-" +
+                StringUtils.cleanPath(Objects.requireNonNull(image.getOriginalFilename())).trim();
         // Image directory
         Path storageDirectory = Paths.get(storagePath);
         if(!Files.exists(storageDirectory)) Files.createDirectories(storageDirectory);
         // Image destination
-        Path imageDestination = Paths.get(storageDirectory.toString() + "\\" + imageName);
+        Path location = Paths.get(storageDirectory.toString() + "\\" + imageName.trim());
         // Resize image
         BufferedImage bufferedImage = imageUtil.simpleResizeImage(convertToImage(image), 400);
         // Save image
-        Files.copy(convertToInputStream(bufferedImage), imageDestination, StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(convertToInputStream(bufferedImage), location, StandardCopyOption.REPLACE_EXISTING);
         // Get image URI
         String imageUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("api/images/getImage/")
@@ -59,9 +60,9 @@ public class ImageService {
     }
 
     public byte[] getImage(String imageName) throws IOException {
-        Path imageDestination = Paths.get(storagePath + "\\" + imageName);
+        Path location = Paths.get(storagePath + "\\" + imageName);
 
-        return IOUtils.toByteArray(imageDestination.toUri());
+        return IOUtils.toByteArray(location.toUri());
     }
 
     private static BufferedImage convertToImage(MultipartFile file) throws IOException {
