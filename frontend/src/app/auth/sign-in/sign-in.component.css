@@ -47,3 +47,7 @@
 input.ng-invalid.ng-touched {
     border: 1px solid rgb(185, 42, 42);
 }
+
+.error {
+    color:rgb(185, 42, 42);
+}

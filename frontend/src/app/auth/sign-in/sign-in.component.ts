@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { throwError } from 'rxjs';
 import { ProfileService } from 'src/app/profile/profile.service';
 import { AuthService } from '../auth.service';
 import { LoginRequest } from './login-request';
@@ -17,6 +18,8 @@ export class SignInComponent implements OnInit {
     loginRequest: LoginRequest;
     signUpForm: FormGroup;
     loginForm: FormGroup;
+    emailVerification: boolean;
+    loginFailed: boolean;
 
     constructor(private authService: AuthService, private profileService: ProfileService, private router: Router) {
         this.signUpRequest = {
@@ -58,6 +61,7 @@ export class SignInComponent implements OnInit {
         this.authService.signUp(this.signUpRequest).subscribe((data) => {
             console.log(data);
             this.signUpForm.reset();
+            this.emailVerification = true;
         });
     }
 
@@ -68,7 +72,12 @@ export class SignInComponent implements OnInit {
         this.authService.login(this.loginRequest).subscribe((data) => {
             console.log(data);
             this.profileService.updateUserInfo(this.loginRequest.username);
+            this.emailVerification = false;
+            this.loginFailed = false;
             this.redirectToHome();
+        }, error => {
+            this.loginFailed = true;
+            throwError(error);
         });
     }
 

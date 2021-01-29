@@ -6,7 +6,6 @@
                     <h5>A place to share knowledge and better understand the world</h5>
                 </div>
                 <div class="card-group">
-                    
                     <!-- Left Card -->
                     <div class="card">
                         <div class="card-body">
@@ -30,13 +29,16 @@
                                     <input type="password" class="form-control" [formControlName]="'password'" required>
                                     <small id="passwordHelp" class="form-text text-muted">Don't share your password with anyone else.</small>
                                 </div>
+                                <span *ngIf="emailVerification">
+                                    Check your inbox for activation email.
+                                </span>
                                 <!-- button -->
                                 <button type="submit" class="btn btn-primary">Sign Up</button>
                             </form>
                             <!-- Sign Up End -->
                         </div>
                     </div>
-
+                    <!-- Left Card End -->
                     <!-- Right Card -->
                     <div class="card">
                         <div class="card-body">
@@ -52,13 +54,16 @@
                                     <input type="password" class="form-control" [formControlName]="'password'" placeholder="Password" required>
                                     <small id="passwordHelp" class="form-text text-muted">Don't share your password with anyone else.</small>
                                 </div>
+                                <span class="error" *ngIf="loginFailed">
+                                    Incorrect username or password.
+                                </span>
                                 <!-- button -->
                                 <button type="submit" class="btn btn-primary">Login</button>
                             </form>
                             <!-- Login End -->
                         </div>
                     </div>
-
+                    <!-- Right Card End -->
                 </div>
             </div>
         </div>
