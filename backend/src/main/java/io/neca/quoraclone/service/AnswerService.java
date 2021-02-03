@@ -5,7 +5,6 @@ import io.neca.quoraclone.dao.QuestionRepository;
 import io.neca.quoraclone.dao.UserRepository;
 import io.neca.quoraclone.dto.AnswerRequest;
 import io.neca.quoraclone.dto.AnswerResponse;
-import io.neca.quoraclone.dto.QuestionRequest;
 import io.neca.quoraclone.exception.CustomException;
 import io.neca.quoraclone.mapper.AnswerMapper;
 import io.neca.quoraclone.model.Question;
@@ -43,7 +42,7 @@ public class AnswerService {
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new CustomException("Question cannot be found"));
 
-        return answerRepository.findAllByQuestion(question).stream()
+        return answerRepository.findByQuestionOrderByCreatedDesc(question).stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
     }

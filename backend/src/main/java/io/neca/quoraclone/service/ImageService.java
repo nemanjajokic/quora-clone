@@ -5,6 +5,7 @@ import io.neca.quoraclone.model.User;
 import io.neca.quoraclone.utils.ImageUtil;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,7 +34,8 @@ public class ImageService {
     @Autowired
     private ImageUtil imageUtil;
 
-    private final String storagePath = "C:\\Users\\Neca\\Desktop\\quoraCloneImages";
+    @Value("${image.storage.path}")
+    private String storagePath;
 
     public void uploadToFileSystem(MultipartFile image) throws Exception {
         // Image name
@@ -41,7 +43,7 @@ public class ImageService {
                 StringUtils.cleanPath(Objects.requireNonNull(image.getOriginalFilename())).trim();
         // Image directory
         Path storageDirectory = Paths.get(storagePath);
-        if(!Files.exists(storageDirectory)) Files.createDirectories(storageDirectory);
+        if (!Files.exists(storageDirectory)) Files.createDirectories(storageDirectory);
         // Image destination
         Path location = Paths.get(storageDirectory.toString() + "\\" + imageName.trim());
         // Resize image

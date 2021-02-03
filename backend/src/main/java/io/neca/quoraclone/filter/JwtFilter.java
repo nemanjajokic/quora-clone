@@ -1,6 +1,7 @@
-package io.neca.quoraclone.security;
+package io.neca.quoraclone.filter;
 
 import io.neca.quoraclone.exception.CustomException;
+import io.neca.quoraclone.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

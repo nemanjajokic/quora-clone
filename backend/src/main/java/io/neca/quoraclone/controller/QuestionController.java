@@ -38,5 +38,5 @@ public class QuestionController {
     public List<QuestionResponse> getAllForTopic(@PathVariable int id) {
         return service.getAllQuestionsForTopic(id);
     }
-    
+
 }

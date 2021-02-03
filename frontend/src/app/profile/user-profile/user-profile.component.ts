@@ -16,7 +16,6 @@ export class UserProfileComponent implements OnInit {
     username: string;
     public formData = new FormData();
     public selectedFile: File = null;
-
     user: UserView = <UserView>{};
 
     ngOnInit(): void {

@@ -45,7 +45,7 @@ public class QuestionService {
     }
 
     public List<QuestionResponse> getAllQuestions() {
-        return questionRepository.findAll().stream()
+        return questionRepository.findByOrderByCreatedDesc().stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
     }
@@ -58,7 +58,9 @@ public class QuestionService {
     }
 
     public List<QuestionResponse> getAllQuestionsForTopic(int id) {
-        return questionRepository.findByTopicId(id).stream()
+        Topic topic = topicRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Topic cannot be found"));
+        return questionRepository.findByTopic(topic).stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
     }

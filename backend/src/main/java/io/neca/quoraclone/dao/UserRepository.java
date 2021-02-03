@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
+
     User findByUsername(String username);
-    boolean existsByUsername(String username);
+
     @Query("SELECT u FROM User u WHERE u.username = ?1")
     UserView findUserInfoByUsername(String username);
 }

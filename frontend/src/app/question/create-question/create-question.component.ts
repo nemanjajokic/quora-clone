@@ -15,10 +15,9 @@ import { QuestionService } from '../question.service';
 export class CreateQuestionComponent implements OnInit {
 
     questionForm: FormGroup;
+    topicForm: FormGroup;
     topics: Array<Topic> = [];
     questionRequest: QuestionRequest;
-
-    topicForm: FormGroup;
     topic: Topic;
 
     constructor(private topicService: TopicService, private questionService: QuestionService,

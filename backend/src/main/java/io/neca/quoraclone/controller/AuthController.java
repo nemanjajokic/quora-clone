@@ -10,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -21,6 +19,7 @@ public class AuthController {
 
     // Sign up
     @PostMapping("/signup")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> signUp(@RequestBody RegistrationRequest registrationRequest) {
         authService.signUp(registrationRequest);
 
@@ -29,25 +28,30 @@ public class AuthController {
 
     // Login
     @PostMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
     public AuthenticationResponse login(@RequestBody LoginRequest loginRequest) {
         return authService.login(loginRequest);
     }
 
     // Logout
     @PostMapping("/logout")
+    @ResponseStatus(HttpStatus.RESET_CONTENT)
     public void logout(@RequestBody RefreshTokenRequest tokenRequest) {
         authService.logout(tokenRequest);
     }
 
     // Verification link
     @GetMapping("/accountVerification/{token}")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> verification(@PathVariable String token) {
         authService.verifyAccount(token);
 
         return new ResponseEntity<>("Account Activated Successfully", HttpStatus.OK);
     }
 
+    // Refresh token
     @PostMapping("/refresh/token")
+    @ResponseStatus(HttpStatus.OK)
     public AuthenticationResponse refreshToken(@RequestBody RefreshTokenRequest tokenRequest) {
         return authService.refreshToken(tokenRequest);
     }

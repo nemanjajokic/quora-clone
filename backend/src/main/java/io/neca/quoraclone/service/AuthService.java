@@ -10,8 +10,8 @@ import io.neca.quoraclone.model.User;
 import io.neca.quoraclone.dao.UserRepository;
 import io.neca.quoraclone.model.VerificationEmail;
 import io.neca.quoraclone.model.VerificationToken;
-import io.neca.quoraclone.security.JwtUtil;
-import io.neca.quoraclone.security.RefreshTokenUtil;
+import io.neca.quoraclone.utils.JwtUtil;
+import io.neca.quoraclone.utils.RefreshTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -52,8 +51,6 @@ public class AuthService {
 
     // Sign Up
     public void signUp(RegistrationRequest registrationRequest) {
-        // Implement method to check if username exists in db
-        // if(!userRepository.existsUserByUsername(registrationRequest.getUsername()))
         User user = new User();
         user.setUsername(registrationRequest.getUsername());
         user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
@@ -90,12 +87,12 @@ public class AuthService {
     // Logout
     public void logout(RefreshTokenRequest tokenRequest) {
         refreshTokenUtil.deleteToken(tokenRequest.getToken());
-        // Save JWT token in redis blacklist or whatever just to instant logout
+        // Save JWT token in redis..
     }
 
     // Refresh Token
     public AuthenticationResponse refreshToken(RefreshTokenRequest tokenRequest) {
-        if(!refreshTokenUtil.isRefreshTokenExpired(tokenRequest.getToken())) {
+        if (!refreshTokenUtil.isRefreshTokenExpired(tokenRequest.getToken())) {
             String token = jwtUtil.GenerateTokenWithUsername(tokenRequest.getUsername());
 
             return AuthenticationResponse.builder()
@@ -139,7 +136,7 @@ public class AuthService {
     }
 
     private void verifyUser(VerificationToken verificationToken) {
-        if(!isVerificationTokenExpired(verificationToken.getToken())) {
+        if (!isVerificationTokenExpired(verificationToken.getToken())) {
             String username = verificationToken.getUser().getUsername();
             User user = userRepository.findByUsername(username);
             user.setVerified(true);

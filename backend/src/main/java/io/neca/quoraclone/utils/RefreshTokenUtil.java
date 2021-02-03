@@ -1,4 +1,4 @@
-package io.neca.quoraclone.security;
+package io.neca.quoraclone.utils;
 
 import io.neca.quoraclone.dao.RefreshTokenRepository;
 import io.neca.quoraclone.exception.CustomException;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -32,7 +31,6 @@ public class RefreshTokenUtil {
     public RefreshToken generateToken() {
         String token = UUID.randomUUID().toString();
         RefreshToken refreshToken = new RefreshToken();
-        // implement refresh token encoding
         refreshToken.setToken(token);
         refreshToken.setExpiration(Instant.now().plusSeconds(expiration));
 

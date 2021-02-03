@@ -1,6 +1,6 @@
 package io.neca.quoraclone.config;
 
-import io.neca.quoraclone.security.JwtFilter;
+import io.neca.quoraclone.filter.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
