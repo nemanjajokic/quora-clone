@@ -12,6 +12,7 @@ Users can upload profile picture, create topics, ask questions and answer questi
 ## Requirements
 * JDK 8+
 * Node.js and npm
+* Angular CLI
 * MySQL(or any other RDBMS)
 * Maven
 
